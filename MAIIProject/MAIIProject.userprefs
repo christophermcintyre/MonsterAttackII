@@ -1,0 +1,15 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\scripts\character\BaseCharacter.cs">
+    <Files>
+      <File FileName="Assets\scripts\character\BaseCharacter.cs" Line="77" Column="16" />
+      <File FileName="Assets\scripts\Player.cs" Line="103" Column="1" />
+      <File FileName="Assets\scripts\BattleStateMachine.cs" Line="40" Column="23" />
+      <File FileName="Assets\scripts\character\Party.cs" Line="19" Column="39" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
