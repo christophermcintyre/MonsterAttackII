@@ -9,10 +9,12 @@ public class EquipmentSlot {
 		ACCESSORY
 	}
 
+	public BaseCharacter owner;
 	private SlotTypes slotType;
-	private Item equippedItem;
+	private StatItem equippedItem;
 
-	public EquipmentSlot(SlotTypes t){
+	public EquipmentSlot(SlotTypes t, BaseCharacter bc){
+		owner = bc;
 		slotType = t;
 	}
 
@@ -25,7 +27,7 @@ public class EquipmentSlot {
 		set{ slotType = value;}
 	}
 
-	public Item EquippedItem {
+	public StatItem EquippedItem {
 		get{ return equippedItem;}
 		set{ equippedItem = value;}
 	}

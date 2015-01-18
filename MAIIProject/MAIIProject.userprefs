@@ -1,11 +1,17 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\scripts\character\BaseCharacter.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\scripts\character\CharacterDatabase.cs">
     <Files>
-      <File FileName="Assets\scripts\character\BaseCharacter.cs" Line="77" Column="16" />
-      <File FileName="Assets\scripts\Player.cs" Line="103" Column="1" />
-      <File FileName="Assets\scripts\BattleStateMachine.cs" Line="40" Column="23" />
-      <File FileName="Assets\scripts\character\Party.cs" Line="19" Column="39" />
+      <File FileName="Assets\scripts\character\CharacterDatabase.cs" Line="78" Column="1" />
+      <File FileName="Assets\scripts\BattleManager.cs" Line="1" Column="1" />
+      <File FileName="Assets\scripts\character\BaseCharacter.cs" Line="1" Column="1" />
+      <File FileName="Assets\scripts\character\abilities\Action.cs" Line="1" Column="1" />
+      <File FileName="Assets\scripts\character\abilities\Attack.cs" Line="1" Column="1" />
+      <File FileName="Assets\scripts\character\jobs\Job.cs" Line="1" Column="1" />
+      <File FileName="Assets\scripts\Party.cs" Line="1" Column="1" />
+      <File FileName="Assets\scripts\character\CharacterDatabase.cs" Line="55" Column="5" />
+      <File FileName="Assets\scripts\character\AIBehaviour.cs" Line="1" Column="1" />
+      <File FileName="Assets\scripts\BattleDatabase.cs" Line="26" Column="33" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

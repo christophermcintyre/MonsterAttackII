@@ -13,18 +13,45 @@ public class Party {
 
 	public Party(string nName){
 		name = nName;
-		//inventory = new Inventory (this);
+		inventory = new Inventory (this);
+	}
+
+	public Party(List<BaseCharacter> list, string nName){
+		name = nName;
+		addMembers (list);
+	}
+
+	public Party(Party template){
+
+		name = template.name;
+		inventory = new Inventory (this);
+
+		foreach (BaseCharacter bc in template.getMembers()) {
+			members.Add(CharacterDatabase.instance.getCharacterByName(bc.Name));
+		}
 	}
 
 	public void addMember(BaseCharacter c){
 		//check party size limit
+		c.party = this;
 		members.Add (c);
 		//c.setParty (this);
 
 	}
 
+	public bool alive(){
+		foreach (BaseCharacter c in members){
+			if (c.alive()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public void addMembers(List<BaseCharacter> characters){
 		foreach(BaseCharacter c in characters){
+			//Debug.Log("Adding " + c.Name);
+			c.party = this;
 			members.Add (c);
 			//c.setParty(this);
 		}		
@@ -41,6 +68,7 @@ public class Party {
 	public void defeat(){
 		defeats++;
 		removeMoney((int) (0.1 * funds));
+		revive ();
 	}
 
 	public void revive(){
@@ -90,6 +118,5 @@ public class Party {
 		funds -= f;
 		if (funds < 0)	funds = 0;
 	}
-
 
 }

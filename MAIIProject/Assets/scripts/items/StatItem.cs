@@ -5,10 +5,12 @@ using System.Collections;
 
 public class StatItem : Item {
 
+	public BaseCharacter owner;
 	private int level;
 	private int maxLevel;
 
 	private int currentExp; //experience towards next level
+	public int expToLevel;
 	private int totalExp;
 
 	private int levelReq; //lvl requirement to equip
@@ -19,21 +21,35 @@ public class StatItem : Item {
 	//material type
 
 	//stat bonuses
-	private int maxHP;
-	private int maxMP;	
-	private int speed;
-	private int atk;
-	private int def;
-	private int eva;
-	private int acc;
-	private int critRate;
-	private float critStrength;
+	private int maxHPBoost;
+	private int maxMPBoost;	
+	private int speedBoost;
+	private int atkBoost;
+	private int defBoost;
+	private int evaBoost;
+	private int accBoost;
+	private int critRateBoost;
+	private float critStrengthBoost;
 
 	//additional effects
 
-	public void setRequiredLevel(int lvl){
-		levelReq = lvl;
+	public void onEquip(BaseCharacter e){		
+		owner = e;
+		//Debug.Log(DisplayName + " Equipped.");
 	}
+
+	public void unequip(){
+		owner.unequip(this);
+		owner = null;
+		//Debug.Log(DisplayName + " Unequipped.");
+	}
+
+	public bool equipped(){
+		if (owner != null) return true;
+		else return false;
+	}
+
+
 
 	//setters and getters
 	public int Level{
@@ -61,48 +77,48 @@ public class StatItem : Item {
 		set{ levelReq = value;}
 	}
 
-	public int MaxHP{
-		get{ return maxHP;}
-		set{ maxHP = value;}
+	public int MaxHPBoost{
+		get{ return maxHPBoost;}
+		set{ maxHPBoost = value;}
 	}
 
-	public int MaxMP{
-		get{ return maxMP;}
-		set{ maxMP = value;}
+	public int MaxMPBoost{
+		get{ return maxMPBoost;}
+		set{ maxMPBoost = value;}
 	}
 
-	public int Speed{
-		get{ return speed;}
-		set{ speed = value;}
+	public int SpeedBoost{
+		get{ return speedBoost;}
+		set{ speedBoost = value;}
 	}
 
-	public int Attack{
-		get{ return atk;}
-		set{ atk = value;}
+	public int AttackBoost{
+		get{ return atkBoost;}
+		set{ atkBoost = value;}
 	}
 
-	public int Defense{
-		get{ return def;}
-		set{ def = value;}
+	public int DefenseBoost{
+		get{ return defBoost;}
+		set{ defBoost = value;}
 	}
 
-	public int Accuracy{
-		get{ return acc;}
-		set{ acc = value;}
+	public int AccuracyBoost{
+		get{ return accBoost;}
+		set{ accBoost = value;}
 	}
 
-	public int Evasion{
-		get{ return eva;}
-		set{ eva = value;}
+	public int EvasionBoost{
+		get{ return evaBoost;}
+		set{ evaBoost = value;}
 	}
 
-	public int CritRate{
-		get{ return critRate;}
-		set{ critRate = value;}
+	public int CritRateBoost{
+		get{ return critRateBoost;}
+		set{ critRateBoost = value;}
 	}
 
-	public float CritStrength{
-		get{ return critStrength;}
-		set{ critStrength = value;}
+	public float CritStrengthBoost{
+		get{ return critStrengthBoost;}
+		set{ critStrengthBoost = value;}
 	}
 }

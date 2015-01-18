@@ -3,6 +3,9 @@ using System.Collections;
 
 public class Accessory : StatItem {
 
+	private int armor;
+	private AccessoryTypes accessoryType;
+
 	public enum AccessoryTypes {
 
 		CATBELL,
@@ -17,14 +20,39 @@ public class Accessory : StatItem {
 		EARRING
 	}
 
-	private AccessoryTypes accessoryType;
 
-	private int armor;
 
-	public Accessory(string name, AccessoryTypes at, int arm){
+	public Accessory(string name, string display, int value, AccessoryTypes at, int arm){
 		ItemName = name;
+		DisplayName = display;
+		itemIcon = Resources.Load<Sprite> ("" + name);
+
+		itemType = ItemType.ACCESSORY;
 		accessoryType = at;
+
 		armor = arm;
+		itemValue = value;
+
+
+
+	}
+
+	public Accessory (Accessory template){
+		ItemName = template.ItemName;
+		DisplayName = template.DisplayName;
+		itemIcon = template.itemIcon;
+
+		itemType = ItemType.ACCESSORY;
+		AccessoryType = template.AccessoryType;
+
+		Armor = template.Armor;
+		itemValue = template.itemValue;
+		LevelReq = template.LevelReq;
+	}
+
+
+	public Accessory(){
+
 	}
 
 	//getters/setters
