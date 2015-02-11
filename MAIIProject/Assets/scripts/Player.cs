@@ -14,6 +14,7 @@ public class Player : MonoBehaviour {
 
 	void Awake(){
 
+		//QualitySettings.vSyncCount = 1;
 		DontDestroyOnLoad (transform.gameObject);
 		instance = this;
 

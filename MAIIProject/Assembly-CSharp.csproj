@@ -49,6 +49,10 @@
      <Compile Include="Assets\scripts\Battle.cs" />
      <Compile Include="Assets\scripts\BattleDatabase.cs" />
      <Compile Include="Assets\scripts\BattleManager.cs" />
+     <Compile Include="Assets\scripts\Construction.cs" />
+     <Compile Include="Assets\scripts\Follower.cs" />
+     <Compile Include="Assets\scripts\ItemPickup.cs" />
+     <Compile Include="Assets\scripts\Marker.cs" />
      <Compile Include="Assets\scripts\Party.cs" />
      <Compile Include="Assets\scripts\Player.cs" />
      <Compile Include="Assets\scripts\PlayerController.cs" />
@@ -85,10 +89,13 @@
      <Compile Include="Assets\scripts\menus\MenuManager.cs" />
      <Compile Include="Assets\scripts\menus\StatusMenu.cs" />
      <None Include="Assets\Standard Assets\Toon Shading\Sources\Shaders\Toony-Basic.shader" />
+     <None Include="Assets\models\shaders\ToonDecal.shader" />
+     <None Include="Assets\models\shaders\UnlitDoubleSided.shader" />
      <None Include="Assets\Standard Assets\Skyboxes\_skybox info.txt" />
      <None Include="Assets\Standard Assets\Toon Shading\Sources\Shaders\Toony-BasicOutline.shader" />
      <None Include="Assets\Standard Assets\Toon Shading\Sources\Shaders\Toony-LightedOutline.shader" />
      <None Include="Assets\Standard Assets\Toon Shading\Sources\Shaders\Toony-Lighted.shader" />
+     <None Include="Assets\models\shaders\DecalUnlit.shader" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.0/UnityEngine.UI.dll</HintPath>
  </Reference>
