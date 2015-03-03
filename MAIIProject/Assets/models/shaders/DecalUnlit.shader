@@ -1,6 +1,7 @@
 ﻿Shader "Custom/DecalUnlit" {
 
 Properties {
+	_DecalColor ("Decal Color", Color) = (0,0,0,1)
 	_MainTex ("Base (RGB)", 2D) = "white" {}
 	_DecalTex ("Decal (RGBA)", 2D) = "black" {}
 }
@@ -31,6 +32,7 @@ SubShader {
 
 		sampler2D _MainTex;
 		sampler2D _DecalTex;
+		float4 _DecalColor;
 		float4 _MainTex_ST;
 			
 		v2f vert (appdata_t v) {			
@@ -43,6 +45,7 @@ SubShader {
 		fixed4 frag (v2f i) : SV_Target	{			
 			fixed4 col = tex2D(_MainTex, i.texcoord);
 			half4 decal = tex2D(_DecalTex, i.texcoord);
+			decal.rgb = decal.rgb * _DecalColor;
 			col.rgb = lerp (col.rgb, decal.rgb, decal.a);
 			return col;
 		}

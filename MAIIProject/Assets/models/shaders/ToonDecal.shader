@@ -1,7 +1,8 @@
-﻿Shader "Custom/ToonDecal" {
+﻿Shader "Custom/OutlineDecal" {
 	Properties {		
 		_OutlineColor ("Outline Color", Color) = (0,0,0,1)
 		_Outline ("Outline width", Range (.002, 0.03)) = .005
+		_DecalColor ("Decal Color", Color) = (0,0,0,1)
 		_MainTex ("Base (RGB)", 2D) = "white" {}
 		_DecalTex ("Decal (RGBA)", 2D) = "black" {}
 	}
@@ -29,7 +30,7 @@
 		float3 norm   = mul ((float3x3)UNITY_MATRIX_IT_MV, v.normal);
 		float2 offset = TransformViewToProjection(norm.xy);
 
-		o.pos.xy += offset * o.pos.z * _Outline;
+		o.pos.xy += offset * _Outline;
 		o.color = _OutlineColor;
 		return o;
 	}

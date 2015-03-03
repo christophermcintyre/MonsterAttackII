@@ -49,6 +49,7 @@
      <Compile Include="Assets\scripts\Battle.cs" />
      <Compile Include="Assets\scripts\BattleDatabase.cs" />
      <Compile Include="Assets\scripts\BattleManager.cs" />
+     <Compile Include="Assets\scripts\CameraController.cs" />
      <Compile Include="Assets\scripts\Construction.cs" />
      <Compile Include="Assets\scripts\Follower.cs" />
      <Compile Include="Assets\scripts\ItemPickup.cs" />
@@ -96,6 +97,7 @@
      <None Include="Assets\Standard Assets\Toon Shading\Sources\Shaders\Toony-LightedOutline.shader" />
      <None Include="Assets\Standard Assets\Toon Shading\Sources\Shaders\Toony-Lighted.shader" />
      <None Include="Assets\models\shaders\DecalUnlit.shader" />
+     <None Include="Assets\models\shaders\LinearFog.shader" />
  <Reference Include="Assembly-UnityScript-firstpass">
  <HintPath>C:/Users/Owner/Documents/GitHub/MonsterAttackII/MAIIProject/Library/ScriptAssemblies/Assembly-UnityScript-firstpass.dll</HintPath>
  </Reference>
