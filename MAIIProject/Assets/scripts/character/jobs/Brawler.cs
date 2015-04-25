@@ -2,5 +2,10 @@
 
 	public Brawler() {
 		Name = "Brawler";
+		MaxHP=133;
+
+
+
+
 	}
 }

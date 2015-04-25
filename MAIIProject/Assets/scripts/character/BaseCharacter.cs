@@ -2,22 +2,40 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class BaseCharacter {
+public class BaseCharacter : MonoBehaviour{
 
-	public string name;
+	public string firstName;
+	public string lastName;
 	public Sprite portrait;
-	public Party party;
-	private Job currentJob;
-	private List<Job> jobsList = new List<Job>();
-	public List<EquipmentSlot> equipmentSlots = new List<EquipmentSlot> ();
+
+	public Party party; //change to teams?
+	public Job currentJob;
+	//public List<Job> jobsList;
+	public JobList jobList;
+	public List<EquipmentSlot> equipmentSlots;
 	public int killCount;
 	public int deathCount;
-	private int currentHp;
-	private int currentMp;
-	private int actionGuage;
+	public int currentHp;
+	public int currentMp;
+	public int actionGuage;
+
 	public bool playerControl;
 
 	public Action currentAction;
+
+	void Awake () {
+		DontDestroyOnLoad (transform.gameObject);
+	}
+
+	public void initCharacter(){
+
+		jobList = GetComponent<JobList> ();
+		jobList.init ();
+
+		equipmentSlots = new List<EquipmentSlot> ();
+		addEquipmentSlots ();
+		revive (true);
+	}
 
 	public BaseCharacter(string nName, Job job){
 		name = nName;
@@ -28,10 +46,15 @@ public class BaseCharacter {
 	}
 
 	public BaseCharacter(BaseCharacter template){
+
+		//jobsList = new List<Job>();		
+		equipmentSlots = new List<EquipmentSlot> ();
+
 		name = template.name;
+		//model = template.model;
 		addEquipmentSlots ();
 		addJob (template.currentJob);
-		CurrentJob = jobsList[0];
+		//CurrentJob = jobsList[0];
 		revive (true);
 
 		for(int i = 0; i < template.equipmentSlots.Count; i++){
@@ -44,9 +67,11 @@ public class BaseCharacter {
 	public void update(){
 		//Debug.Log (name+ "I'm updating");
 
+
+
 		//updateEffects ();
 		if(alive() && actionGuage < 1000){
-			actionGuage += currentJob.Speed;
+			actionGuage += CurrentJob.Speed;
 		}
 		if (currentAction != null && ActionGuage >= currentAction.chargeTime ){
 			currentAction.execute();
@@ -102,8 +127,11 @@ public class BaseCharacter {
 		}
 
 		if (fullRevive) {
-			currentHp = currentJob.MaxHP;
-			currentMp = currentJob.MaxMP;
+			//currentHp = currentJob.MaxHP;
+			CurrentHp = jobList.getCurrentJob().MaxHP;
+			CurrentMp = jobList.getCurrentJob().MaxMP;
+
+			//currentMp = currentJob.MaxMP;
 		}
 	}
 
@@ -115,8 +143,9 @@ public class BaseCharacter {
 	}
 
 	public void addJob(Job j){
+		Debug.Log ("Adding job: " + j.Name + " to " + name);
 		j.initJob (this);
-		JobsList.Add (j);
+		//JobsList.Add (j);
 	}
 
 	public void addEquipmentSlots(){
@@ -176,6 +205,7 @@ public class BaseCharacter {
 		CurrentHp = 0;
 		reset ();
 		deathCount++;
+		this.GetComponent<Animation>().CrossFade("Idle");
 	}
 
 	public void addKill(){
@@ -192,7 +222,7 @@ public class BaseCharacter {
 				total += es.EquippedItem.AttackBoost;
 			}
 		}
-		return total + currentJob.Attack;
+		return total + CurrentJob.Attack;
 	}
 
 	public int TotalDefense(){		
@@ -206,7 +236,7 @@ public class BaseCharacter {
 				}
 			}
 		}		
-		return total + currentJob.Attack;
+		return total + CurrentJob.Attack;
 	}
 
 
@@ -217,7 +247,7 @@ public class BaseCharacter {
 				total += es.EquippedItem.AccuracyBoost;
 			}
 		}		
-		return total + currentJob.Accuracy;
+		return total + CurrentJob.Accuracy;
 	}
 
 	public int TotalEvasion(){		
@@ -227,15 +257,15 @@ public class BaseCharacter {
 				total += es.EquippedItem.EvasionBoost;
 			}
 		}		
-		return total + currentJob.Evasion;
+		return total + CurrentJob.Evasion;
 	}
 
 	public int TotalCritRate(){
-		return currentJob.CritRate;
+		return CurrentJob.CritRate;
 	}
 
 	public float TotalCritStrength(){
-		return currentJob.CritStrength;
+		return CurrentJob.CritStrength;
 	}
 
 	public Sprite Portrait{
@@ -244,19 +274,19 @@ public class BaseCharacter {
 	}
 
 	public string Name{
-		get{ return name;}
-		set{ name = value;}
+		get{ return firstName;}
+		set{ firstName = value;}
 	}
 
 	public Job CurrentJob{
-		get{ return currentJob;}
+		get{ return jobList.getCurrentJob();}
 		set{ currentJob = value;}
 	}
 
-	public List<Job> JobsList{
-		get{ return jobsList;}
-		set{ jobsList = value;}
-	}
+	//public List<Job> JobsList{
+	//	get{ return jobsList;}
+	//	set{ jobsList = value;}
+	//}
 
 	public int ActionGuage{
 		get{ return actionGuage;}

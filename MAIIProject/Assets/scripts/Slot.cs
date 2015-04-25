@@ -31,7 +31,7 @@ public class Slot : MonoBehaviour, IPointerDownHandler {
 	public void reset(){
 
 		item = null;
-		//GetComponentInParent<StatusMenu> ().reset ();
+		GetComponentInParent<StatusMenu> ().refresh ();
 
 
 	}
@@ -45,7 +45,6 @@ public class Slot : MonoBehaviour, IPointerDownHandler {
 		}
 
 		if (data.button == PointerEventData.InputButton.Right && item != null) {
-
 			item.unequip();
 			reset();
 

@@ -3,9 +3,9 @@ using System.Collections;
 
 public class Player : MonoBehaviour {
 
-	public static Player instance;
-	public static Party playerParty;
-	public static string playerName;
+	//public static Player instance;
+	public Party playerParty;
+	public string playerName;
 	//public static Party monsterParty;
 	public ItemDatabase itemDatabase;
 	public CharacterDatabase characterDatabase;
@@ -16,26 +16,26 @@ public class Player : MonoBehaviour {
 
 		//QualitySettings.vSyncCount = 1;
 		DontDestroyOnLoad (transform.gameObject);
-		instance = this;
+		//instance = this;
 
 	}
 
 	void Start () {
 
-		itemDatabase = GameObject.FindGameObjectWithTag ("ItemDatabase").GetComponent<ItemDatabase> ();
-		characterDatabase = GameObject.FindGameObjectWithTag ("CharacterDatabase").GetComponent<CharacterDatabase> ();
-		battleDatabase = GameObject.FindGameObjectWithTag ("BattleDatabase").GetComponent<BattleDatabase> ();
+		//itemDatabase = GameObject.FindGameObjectWithTag ("ItemDatabase").GetComponent<ItemDatabase> ();
+		//characterDatabase = GameObject.FindGameObjectWithTag ("CharacterDatabase").GetComponent<CharacterDatabase> ();
+		//battleDatabase = GameObject.FindGameObjectWithTag ("BattleDatabase").GetComponent<BattleDatabase> ();
 
 		playerName = "Player";
 		playerParty = new Party (playerName);
-		playerParty.addMembers (CharacterDatabase.instance.characters);
+		playerParty.addMembers (characterDatabase.characters);
 
 		foreach (BaseCharacter character in playerParty.getMembers()) {
-			foreach (EquipmentSlot slot in character.equipmentSlots){
-				if(slot.EquippedItem != null){
-					playerParty.inventory.add(slot.EquippedItem);
-				}
-			}
+		//	foreach (EquipmentSlot slot in character.equipmentSlots){
+		//		if(slot.EquippedItem != null){
+		//			playerParty.inventory.add(slot.EquippedItem);
+		///		}
+		//	}
 		}
 		playerParty.inventory.add (ItemDatabase.instance.getItemByName ("Spiked Bell"));
 		playerParty.inventory.add (ItemDatabase.instance.getItemByName ("Magic Bell"));

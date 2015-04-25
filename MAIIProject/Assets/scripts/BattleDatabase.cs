@@ -4,9 +4,10 @@ using System.Collections.Generic;
 
 public class BattleDatabase : MonoBehaviour {
 
+	public CharacterDatabase characterDatabase;
+
 	public List<Battle> battleList = new List<Battle>();
-	//public static List<Battle> battleList = new List<Battle>();
-	//public static BattleDatabase instance;
+
 
 	void Awake(){
 		DontDestroyOnLoad (transform.gameObject);
@@ -21,11 +22,11 @@ public class BattleDatabase : MonoBehaviour {
 
 	public void buildBattleDatabase(){
 
-		Party goblinParty = new Party (CharacterDatabase.instance.monsters, "Goblin Party");
+		Party demoParty = new Party (characterDatabase.monsters, "Training Battle");
 
 		//battleList.Add (new Battle(rat))
 
-		battleList.Add (new Battle(goblinParty, "Goblin Attack", "Three goblin brothers.", 200, 200));
+		battleList.Add (new Battle(demoParty, "Training Battle", "A training fight against an automaton", 200, 200));
 
 	}
 
@@ -33,7 +34,9 @@ public class BattleDatabase : MonoBehaviour {
 
 		foreach (Battle b in battleList) {
 			if (b.battleName == name){
-				return copyBattle(b);
+				Debug.Log("Returning " + b.battleName);
+				return b;
+				//return copyBattle(b);
 			}
 		}
 		return null;

@@ -51,10 +51,10 @@ public class Follower : MonoBehaviour {
 			playerController.Move (forward * Time.deltaTime);
 			playerController.SimpleMove (Physics.gravity);
 			
-			animation.CrossFade("Walk");
+			GetComponent<Animation>().CrossFade("Walk");
 			
 		} else {
-			animation.CrossFade("Idle");
+			GetComponent<Animation>().CrossFade("Idle");
 		}
 		
 		playerController.SimpleMove (Physics.gravity);
@@ -73,10 +73,10 @@ public class Follower : MonoBehaviour {
 			playerController.Move (forward * Time.deltaTime);
 			playerController.SimpleMove (Physics.gravity);
 
-			animation.CrossFade("Walk");
+			GetComponent<Animation>().CrossFade("Walk");
 
 		} else {
-			animation.CrossFade("Idle");
+			GetComponent<Animation>().CrossFade("Idle");
 		}
 
 		playerController.SimpleMove (Physics.gravity);
@@ -87,14 +87,14 @@ public class Follower : MonoBehaviour {
 
 		if(Vector3.Distance (target.transform.position, transform.position) > distance){			
 			
-			Vector3 forward = transform.TransformDirection(Vector3.forward) * moveSpeed;
+			//Vector3 forward = transform.TransformDirection(Vector3.forward) * moveSpeed;
 
 			transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.LookRotation (target.transform.position - transform.position), rotateSpeed * Time.deltaTime);
 			transform.position += transform.forward * moveSpeed * Time.deltaTime;
 			
-			animation.CrossFade("Walk");
+			GetComponent<Animation>().CrossFade("Walk");
 			
-		} else animation.CrossFade("Idle");
+		} else GetComponent<Animation>().CrossFade("Idle");
 	}
 
 	void AdvancedMovement(){
@@ -109,15 +109,15 @@ public class Follower : MonoBehaviour {
 			playerController.Move (forward * Time.deltaTime);
 			playerController.SimpleMove (Physics.gravity);
 
-			animation.CrossFade("Walk");
+			GetComponent<Animation>().CrossFade("Walk");
 
-		} else animation.CrossFade("Idle");
+		} else GetComponent<Animation>().CrossFade("Idle");
 	}
 
 	void AnimationControl(){
 
 		if (Input.GetKey ("j")) {
-			animation.Play("Joy");
+			GetComponent<Animation>().Play("Joy");
 		}		
 	}
 }

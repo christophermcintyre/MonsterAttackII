@@ -5,6 +5,8 @@ using System.Collections.Generic;
 
 public class BattleManager : MonoBehaviour {
 
+	public GameObject player; //FIND THE PLAYER
+
 	public BattleDatabase battleDatabase;
 	public Battle battle;
 	private Party playerParty;
@@ -18,11 +20,20 @@ public class BattleManager : MonoBehaviour {
 	public Text[] characterStats;
 	public Text[] characterMP;
 	public Image[] atbGauges;
+
+	public CommandMenu commandMenu;
+	public GameObject commandMenuPanel;
+
 	bool started = false;
 
 	public float counter;
 	public float battleSpeed = 0.1f;
 
+	//change to list of vectors??
+	public List<Transform> playerPositions = new List<Transform> ();
+	public List<Transform> enemyPositions = new List<Transform> ();
+
+	//public BaseCharacter temp;
 
 	public enum BattleStates {
 		START, //load assets, combatants, pan camera, starting play animations
@@ -34,22 +45,42 @@ public class BattleManager : MonoBehaviour {
 	}
 
 	public void load(Battle b){
-		battle = b;
+		Debug.Log ("This probably does nothing");
+		//battle = b;
 	}
 
 	void Start() {
 
+		//player = (Player)FindObjectOfType (typeof(Player));
+		player = GameObject.FindWithTag("Player");
+		battleDatabase = player.GetComponent<Player> ().battleDatabase;
+		//player = go.GetComponent<Player> ();
+
+		commandMenuPanel.SetActive (false);
 		counter = Time.fixedTime + battleSpeed;
 		Debug.Log ("Battle start");
 
+
 		//battle = Player.instance.battleDatabase.battleList [0];
-		battle = Player.instance.battleDatabase.getBattleByName ("Goblin Attack");
+		battle = battleDatabase.getBattleByName ("Training Battle");
 		//battle = battleDatabase.battleList [0];
 
-		playerParty = Player.playerParty;
+		playerParty = player.GetComponent<Player> ().playerParty;
 		aiParty = battle.enemyParty;
 		combatants.AddRange(playerParty.getMembers());
 		combatants.AddRange(aiParty.getMembers());
+
+		for(int i = 0; i < playerParty.getMembers().Count ; i++){
+			Debug.Log("Moving into position: " + playerParty.getMembers()[i].Name);
+			playerParty.getMembers()[i].transform.position = playerPositions[i].position;
+		}
+
+		for(int i = 0; i < aiParty.getMembers().Count ; i++){
+				Debug.Log("Moving into position: " + aiParty.getMembers()[i].Name);
+				aiParty.getMembers()[i].transform.position = enemyPositions[i].position;
+		}
+
+
 
 		if (battle == null)	Debug.Log ("Error: No battle loaded");
 
@@ -105,7 +136,9 @@ public class BattleManager : MonoBehaviour {
 			foreach(BaseCharacter c in combatants){
 				c.update();
 				if(c.ready()){
-					c.chooseAction(combatants);
+					if (c.playerControl) {
+						openCommandMenu(c);
+					} else c.chooseAction(combatants);
 					//actionQueue.Add(c);
 				}
 			}
@@ -148,6 +181,7 @@ public class BattleManager : MonoBehaviour {
 			aiParty.getMembers().Clear();
 			aiParty = null;
 			playerParty.reset();
+
 			Application.LoadLevel("main");
 			break;
 
@@ -166,4 +200,18 @@ public class BattleManager : MonoBehaviour {
 
 		}
 	}
+
+	public void openCommandMenu(BaseCharacter bc){
+
+		commandMenu.open (bc, combatants);
+		commandMenuPanel.SetActive (true);
+
+	}
+
+
+	public void targetingMode(){
+
+	}
+
+
 }

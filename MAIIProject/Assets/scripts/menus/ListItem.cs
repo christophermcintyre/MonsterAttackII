@@ -31,7 +31,9 @@ public class ListItem : MonoBehaviour, IPointerDownHandler {
 	}
 
 	public void equipItem (){
-		BaseCharacter character = this.GetComponentInParent<EquipmentMenu>().slot.owner;
-		character.equip ((StatItem)item, this.GetComponentInParent<EquipmentMenu> ().slot);
+
+		Debug.Log ("I shouldn't be called!");
+		//BaseCharacter character = this.GetComponentInParent<EquipmentMenu>().slot.owner;
+		//character.equip ((StatItem)item, this.GetComponentInParent<EquipmentMenu> ().slot);
 	}
 }

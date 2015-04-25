@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Battle {
+public class Battle{
 
 	public Party enemyParty;
 

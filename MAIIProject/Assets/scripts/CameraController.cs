@@ -9,7 +9,7 @@ public class CameraController : MonoBehaviour {
 	//TODO make camera default to a certain height
 	//TODO make camera return to default positions gradually while moving
 	//TODO make zoom more fluid
-	public float defaultHeight = 5;
+	public float adjustedTargetHeight = 2.5f;
 	public float minViewDistance = 1.0f;
 	public float maxViewDistance = 25.0f;
 
@@ -23,7 +23,8 @@ public class CameraController : MonoBehaviour {
 
 	public bool cameraPositionHold;
 
-	void Start () {	
+	void Start () {
+
 		Vector3 angles = transform.eulerAngles;
 		x = angles.x;
 		y = angles.y;
@@ -55,13 +56,12 @@ public class CameraController : MonoBehaviour {
 
 		defaultDistance -= Input.GetAxis("Mouse ScrollWheel") * Time.deltaTime * zoomRate * Mathf.Abs(defaultDistance);
 		defaultDistance = Mathf.Clamp (defaultDistance, minViewDistance, maxViewDistance);
-		//correctedDistance = desiredDistance;
 
-		Vector3 position = target.position - (rotation * Vector3.forward * defaultDistance);
+		/// Vector3 position = target.position - (rotation * Vector3.forward * defaultDistance);
+		Vector3 position = (target.position + new Vector3(0,adjustedTargetHeight,0)) - (rotation * Vector3.forward * defaultDistance);
 
 		transform.rotation = rotation;
-		transform.position = position;
-	
+		transform.position = position;	
 	}
 
 

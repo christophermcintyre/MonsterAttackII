@@ -14,7 +14,8 @@ public class ItemList : MonoBehaviour {
 			ListItem l = (ListItem)Instantiate(listItem);
 			list.Add(l);
 			l.GetComponent<ListItem>().displayItem(i);
-			l.transform.parent = this.gameObject.transform;
+			//l.transform.parent = this.gameObject.transform;
+			l.transform.SetParent(this.gameObject.transform, false);
 		}
 	}
 

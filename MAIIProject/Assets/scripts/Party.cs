@@ -27,7 +27,7 @@ public class Party {
 		inventory = new Inventory (this);
 
 		foreach (BaseCharacter bc in template.getMembers()) {
-			members.Add(CharacterDatabase.instance.getCharacterByName(bc.Name));
+			//members.Add(CharacterDatabase.instance.getCharacterByName(bc.Name));
 		}
 	}
 

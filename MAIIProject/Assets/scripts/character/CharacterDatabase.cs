@@ -4,39 +4,49 @@ using System.Collections.Generic;
 
 public class CharacterDatabase : MonoBehaviour {
 
-	public static CharacterDatabase instance;
 	public List<BaseCharacter> characters = new List<BaseCharacter>();
 	public List<BaseCharacter> monsters = new List<BaseCharacter>();
 
+	public BaseCharacter calais;
+	public BaseCharacter zetes;
+	public BaseCharacter boop;
+
+
 	void Awake () {
 		DontDestroyOnLoad (transform.gameObject);
-		instance = this;
-
 	}
 
 	public void Start(){
-
 		buildCharacters ();
 	}
 
-	//need a method to copy characters;
-
 	public void buildCharacters(){
 
-		//Debug.Log("building characters");
+		//calais = (BaseCharacter)Instantiate(prefab_calais, new Vector3(0,0,0), prefab_calais.transform.localRotation);
+		//calais.initCharacter ();
+		//calais.equip(((StatItem)ItemDatabase.instance.getItemByName("Faerie Flute")), calais.equipmentSlots[0]);
+
+		//characters.Add(calais);
+
+
+		characters.Add ((BaseCharacter)Instantiate(calais, new Vector3(0,0,0), Quaternion.identity));
+		characters.Add ((BaseCharacter)Instantiate(zetes, new Vector3(0,0,0), zetes.transform.localRotation));
+
+		monsters.Add ((BaseCharacter)Instantiate(boop, new Vector3(0,0,0), boop.transform.localRotation));
+
+		//BaseCharacter calais = new BaseCharacter("Calais", new Musician());
+		//calais.equip(((StatItem)ItemDatabase.instance.getItemByName("Faerie Flute")), calais.equipmentSlots[0]);
+		//calais.equip(((StatItem)ItemDatabase.instance.getItemByName("Lucky Bell")), calais.equipmentSlots[2]);
+		//calais.Portrait = Resources.Load<Sprite> ("calais1");
+		//calais.model = prefab_calais;
 		
-		BaseCharacter calais = new BaseCharacter("Calais", new Musician());
-		calais.equip(((StatItem)ItemDatabase.instance.getItemByName("Faerie Flute")), calais.equipmentSlots[0]);
-		calais.equip(((StatItem)ItemDatabase.instance.getItemByName("Lucky Bell")), calais.equipmentSlots[2]);
-		calais.Portrait = Resources.Load<Sprite> ("calais1");
-		characters.Add(calais);
-		
-		BaseCharacter zetes = new BaseCharacter("Zetes", new Thief());
-		zetes.equip(((StatItem)ItemDatabase.instance.getItemByName("Dagger")), zetes.equipmentSlots[0]);
-		zetes.Portrait = Resources.Load<Sprite> ("calais2");
-		characters.Add(zetes);		
-		
-		BaseCharacter ashley = new BaseCharacter("Ashley", new BlackMage());
+		//BaseCharacter zetes = new BaseCharacter("Zetes", new Thief());
+
+		//zetes.initCharacter ();
+		//zetes.equip(((StatItem)ItemDatabase.instance.getItemByName("Dagger")), zetes.equipmentSlots[0]);
+		//characters.Add(zetes);
+
+		/*BaseCharacter ashley = new BaseCharacter("Ashley", new BlackMage());
 		ashley.equip(((StatItem)ItemDatabase.instance.getItemByName("Apprentice Wand")), ashley.equipmentSlots[0]);
 		ashley.Portrait = Resources.Load<Sprite> ("ashley1");
 		characters.Add(ashley);		
@@ -45,27 +55,28 @@ public class CharacterDatabase : MonoBehaviour {
 		luc.equip(((StatItem)ItemDatabase.instance.getItemByName("Novice Staff")), luc.equipmentSlots[0]);
 		luc.Portrait = Resources.Load<Sprite> ("luc1");
 		characters.Add(luc);
+*/
 
-		//BaseCharacter direrat = new BaseCharacter("Dire Rat", new Thief());
-		//monsters.Add(direrat);
+		//BaseCharacter boop = new BaseCharacter ("Boop", new Brawler ());
+		//boop.model = prefab_boop;
+		///boop.initCharacter ();
+		//monsters.Add (boop);
 
-		BaseCharacter goblin = new BaseCharacter ("Goblin", new Brawler ());
-		monsters.Add (goblin);
 
-		//BaseCharacter hoblin = new BaseCharacter ("Hoblin", new Brawler ());
-		//monsters.Add (hoblin);
+		for(int i = 0; i < characters.Count ; i++){
+			characters[i].initCharacter();
+		}
 
-		//BaseCharacter kobold = new BaseCharacter ("Kobold", new Brawler ());
-		//monsters.Add (kobold);
-
-		//BaseCharacter cockatrice = new BaseCharacter ("Cockatrice", new DarkKnight ());
-		//monsters.Add (cockatrice);
+		for(int i = 0; i < monsters.Count ; i++){
+			monsters[i].initCharacter();
+		}
 	}
 
 	public BaseCharacter getCharacterByName(string name){
 		foreach (BaseCharacter bc in monsters) {
 			if(bc.name == name){
-				return copyCharacter(bc);
+				return bc;
+				//return copyCharacter(bc);
 			}
 		}
 		return null;

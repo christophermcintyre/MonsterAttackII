@@ -6,6 +6,8 @@ using UnityEngine.UI;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour {
 
+	public bool movementControl;
+
 	public float forwardSpeed;
 	public float rotateSpeed;
 	private CharacterController playerController;
@@ -20,10 +22,10 @@ public class PlayerController : MonoBehaviour {
 	//public GameObject lastActive;
 	public List<GameObject> activeObjects = new List<GameObject>();
 	public List<ItemPickup> activeItems = new List<ItemPickup>();
-
 	
 	public Text stickText;
 	public int sticks;
+
 
 	void Start () {
 
@@ -38,7 +40,7 @@ public class PlayerController : MonoBehaviour {
 		AnimationControl ();
 		KeyActions ();
 
-		stickText.text = "Sticks: " + sticks;	
+		//stickText.text = "Sticks: " + sticks;	
 	}
 
 	void Movement(){
@@ -95,7 +97,7 @@ public class PlayerController : MonoBehaviour {
 			sticks +=1;
 		}
 		
-	}		
+	}	
 
 
 	void AnimationControl(){
@@ -103,15 +105,15 @@ public class PlayerController : MonoBehaviour {
 		Vector3 inputVect = new Vector3 (Input.GetAxis ("Horizontal"), 0, Input.GetAxis ("Vertical"));
 
 		if (Input.GetKey ("j")) {
-			animation.Play("Joy");
+			GetComponent<Animation>().Play("Battle_Idle");
 		}
 
-		if (inputVect.magnitude == 0 && animation.IsPlaying ("Idle") == false) {
-			animation.CrossFade("Idle");
+		if (inputVect.magnitude == 0 && GetComponent<Animation>().IsPlaying ("Idle") == false) {
+			GetComponent<Animation>().CrossFade("Idle");
 		}
 
-		if (inputVect.magnitude != 0 && animation.IsPlaying("Walk") == false) {
-			animation.CrossFade("Walk");
+		if (inputVect.magnitude != 0 && GetComponent<Animation>().IsPlaying("Walk") == false) {
+			GetComponent<Animation>().CrossFade("Walk");
 		}
 	}
 }

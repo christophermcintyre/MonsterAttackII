@@ -3,20 +3,22 @@ using System.Collections;
 
 public class MenuManager : MonoBehaviour {
 
+	public Player player;
+
 	public Menu currentMenu;
 	public BaseCharacter selectedCharacter;
 	public EquipmentSlot selectedSlot;
 
 	public void Start(){
 
-		if (Player.playerParty != null) selectedCharacter = Player.playerParty.getMembers ()[0];
+		if (player.playerParty != null) selectedCharacter = player.playerParty.getMembers ()[0];
 
-		showMenu (currentMenu);
+		//showMenu (currentMenu);
 	}
 
 	public void selectCharacter(int characterIndex) {
 
-		selectedCharacter = Player.playerParty.getMembers ()[characterIndex];
+		selectedCharacter = player.playerParty.getMembers ()[characterIndex];
 
 	}
 

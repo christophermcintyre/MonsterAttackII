@@ -3,6 +3,8 @@ using System.Collections;
 
 public class Menu : MonoBehaviour {
 
+	public Player player;
+
 	private Animator animator;
 	private CanvasGroup canvasGroup;
 	public BaseCharacter character;
@@ -14,7 +16,9 @@ public class Menu : MonoBehaviour {
 	}
 
 	public void Awake(){
-		
+
+		player = (Player)FindObjectOfType (typeof(Player));
+
 		animator = GetComponent<Animator> ();
 		canvasGroup = GetComponent<CanvasGroup> ();
 		

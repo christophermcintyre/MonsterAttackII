@@ -19,7 +19,6 @@ public class StatusMenu : Menu {
 	public Text evasion;
 
 	public void Start(){
-		//clean ();
 
 	}
 
@@ -30,29 +29,33 @@ public class StatusMenu : Menu {
 	}
 
 	public override void open(){
+		refresh ();
+	}
+
+	public override void refresh(){
 
 		if(character.equipmentSlots[0].EquippedItem != null){
 			slots[0].item = character.equipmentSlots[0].EquippedItem;
 		}
-
+		
 		if(character.equipmentSlots[1].EquippedItem != null){
 			slots[1].item = character.equipmentSlots[1].EquippedItem;
 		}
-
+		
 		if(character.equipmentSlots[2].EquippedItem != null){
 			slots[2].item = character.equipmentSlots[2].EquippedItem;
 		}
-
+		
 		if(character.equipmentSlots[3].EquippedItem != null){
 			slots[3].item = character.equipmentSlots[3].EquippedItem;
 		}
-
+		
 		portrait.color = new Color32(255, 255, 255, 255);
 		portrait.sprite = character.Portrait;
-
+		
 		characterName.text = character.Name;
 		characterJob.text = "LVL " + character.CurrentJob.Level + " " + character.CurrentJob.Name;
-
+		
 		experience.text = "EXP: " + character.CurrentJob.CurrentExp + "/" + character.CurrentJob.ExpToLevel;
 		health.text = "HP:" + character.CurrentHp + "/" + character.CurrentJob.MaxHP;
 		mana.text = "MP: " + character.CurrentMp + "/" + character.CurrentJob.MaxMP;

@@ -84,7 +84,7 @@ public class EquipmentMenu : Menu {
 
 		case EquipmentSlot.SlotTypes.RIGHTHAND: 
 			//Debug.Log ("looking for righthanded items");
-			foreach(StatItem i in Player.playerParty.inventory.Items){
+			foreach(StatItem i in player.playerParty.inventory.Items){
 				if (i.itemType == Item.ItemType.WEAPON){
 					if (!i.equipped()) items.Add(i);
 					if (i.equipped() && i.owner == character) items.Add(i);
@@ -95,7 +95,7 @@ public class EquipmentMenu : Menu {
 
 		case EquipmentSlot.SlotTypes.LEFTHAND:
 			//Debug.Log ("looking for lefthanded items");
-			foreach(StatItem i in Player.playerParty.inventory.Items){
+			foreach(StatItem i in player.playerParty.inventory.Items){
 				if (i.itemType == Item.ItemType.WEAPON){
 					if (!i.equipped()) items.Add(i);
 					if (i.equipped() && i.owner == character) items.Add(i);
@@ -106,7 +106,7 @@ public class EquipmentMenu : Menu {
 
 		case EquipmentSlot.SlotTypes.ACCESSORY:
 			//Debug.Log ("looking for accessories");
-			foreach(StatItem i in Player.playerParty.inventory.Items){
+			foreach(StatItem i in player.playerParty.inventory.Items){
 				if (i.itemType == Item.ItemType.ACCESSORY){
 					if (!i.equipped()) items.Add(i);
 					if (i.equipped() && i.owner == character) items.Add(i);

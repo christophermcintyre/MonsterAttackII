@@ -5,13 +5,14 @@ using System.Collections.Generic;
 
 public class GameMenu : Menu {
 
-	public List<BaseCharacter> partyList = Player.playerParty.getMembers();
+	public List<BaseCharacter> partyList;
 
 	public Image[] portraits;
 	public Text[] names;
 	public Text[] jobs;
 	public Text[] vitals;
 	public Text[] weapons;
+
 
 	void Start () {
 
@@ -21,8 +22,11 @@ public class GameMenu : Menu {
 	public override void open(){
 
 		//Debug.Log ("Updating character menu layout");
+		partyList = player.playerParty.getMembers ();
 
-		foreach (BaseCharacter member in partyList) {
+
+		foreach (BaseCharacter member in partyList) {		
+
 			portraits[partyList.IndexOf(member)].color = new Color32(255, 255, 255, 255);
 			portraits[partyList.IndexOf(member)].sprite = member.Portrait;
 			names[partyList.IndexOf(member)].text = member.Name;
