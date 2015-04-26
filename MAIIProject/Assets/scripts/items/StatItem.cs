@@ -15,6 +15,8 @@ public class StatItem : Item {
 
 	private int levelReq; //lvl requirement to equip
 
+	public bool equipped = false;
+
 	//required class to equip
 
 	//elemental type
@@ -39,14 +41,9 @@ public class StatItem : Item {
 	}
 
 	public void unequip(){
-		owner.unequip(this);
-		owner = null;
+		//owner.unequip(this);
+		//owner = null;
 		//Debug.Log(DisplayName + " Unequipped.");
-	}
-
-	public bool equipped(){
-		if (owner != null) return true;
-		else return false;
 	}
 
 

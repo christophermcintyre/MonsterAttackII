@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Battle{
 
-	public Party enemyParty;
+	public List<BaseCharacter> enemyParty;
 
 	public string battleName;
 	public string battleDesc;
@@ -14,7 +15,7 @@ public class Battle{
 	//battlefield model
 	//music
 
-	public Battle(Party enemies, string name, string desc, int money, int exp){
+	public Battle(List<BaseCharacter> enemies, string name, string desc, int money, int exp){
 
 		enemyParty = enemies;
 		battleName = name;

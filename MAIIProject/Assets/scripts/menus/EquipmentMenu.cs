@@ -17,19 +17,27 @@ public class EquipmentMenu : Menu {
 	public Text itemBaseStat;
 	public Text itemDelay;
 
-	public ItemList listBox;
-	public List<Item> items = new List<Item>();
+	public GameObject itemListPanel;
+	public ListItem listItemPrefab;
+	public List<ListItem> itemDisplayList = new List<ListItem>();
 	public StatItem selectedItem;
+
+	public Item.ItemType iType;
+	public int selectedSlot;
 
 	public override void close(){
 
-		listBox.closeList ();
+		foreach (ListItem obj in itemDisplayList) {
+			Destroy (obj.gameObject);
+		}
+
+		itemDisplayList.Clear ();
 		selectedItem = null;
 	}
 
 	public override void open(){
 
-		listBox.displayList (validItems(slot));
+		displayList (validItems());
 
 		portrait.color = new Color32(255, 255, 255, 255);
 		portrait.sprite = character.Portrait;
@@ -40,12 +48,23 @@ public class EquipmentMenu : Menu {
 		refresh ();
 	}
 
+	public void displayList(List<StatItem> items){
+		foreach (StatItem i in items) {
+			ListItem l = (ListItem)Instantiate(listItemPrefab);
+			itemDisplayList.Add(l);
+			l.displayItem(i);
+			l.transform.SetParent(itemListPanel.transform, false);
+		}
+	}
+
 	public override void refresh(){
 
-		listBox.refresh ();
+		foreach (ListItem obj in itemDisplayList) {
+			obj.transform.GetChild (1).GetComponent<Text>().color = new Color(255,255,255);
+		}
 
 		if (selectedItem == null) {
-			selectedItem = (StatItem)items[0];
+			selectedItem = itemDisplayList[0].item;
 		}
 		
 		if (selectedItem != null) {
@@ -70,46 +89,68 @@ public class EquipmentMenu : Menu {
 			}			
 		}
 	}
-
+	//potential to move to ListItem
 	public void equipItem(){
 
-		character.equip (selectedItem, slot);	
+		switch (selectedSlot) {
+
+		case 0:
+			if (character.mainWeapon != null) {
+				character.mainWeapon.equipped = false;
+			}
+			character.mainWeapon = (Weapon)selectedItem;
+			selectedItem.equipped = true;
+			break;
+
+		case 1:
+			if (character.offHandWeapon != null) {
+				character.offHandWeapon.equipped = false;
+			}
+			character.offHandWeapon = (Weapon)selectedItem;
+			selectedItem.equipped = true;
+			break;
+
+		case 2:
+			if (character.accessory1 != null) {
+				character.accessory1.equipped = false;
+			}
+			character.accessory1 = (Accessory)selectedItem;
+			selectedItem.equipped = true;
+			break;
+
+		case 3:
+			if (character.accessory2 != null) {
+				character.accessory2.equipped = false;
+			}
+			character.accessory2 = (Accessory)selectedItem;
+			selectedItem.equipped = true;
+			break;
+		}
+
 	}
 
-	public List<Item> validItems(EquipmentSlot es){
+	public List<StatItem> validItems(){
 
-		items.Clear();
+		List<StatItem> items = new List<StatItem> ();;
 
-		switch(es.SlotType) {
+		switch(iType) {
 
-		case EquipmentSlot.SlotTypes.RIGHTHAND: 
+		case Item.ItemType.WEAPON: 
 			//Debug.Log ("looking for righthanded items");
-			foreach(StatItem i in player.playerParty.inventory.Items){
+			foreach(StatItem i in player.inventory.Items){
 				if (i.itemType == Item.ItemType.WEAPON){
-					if (!i.equipped()) items.Add(i);
-					if (i.equipped() && i.owner == character) items.Add(i);
+					if (!i.equipped) items.Add(i);
+					//if (i.equipped() && i.owner == character) items.Add(i);
 				}
 			}
 			break;
 		
-
-		case EquipmentSlot.SlotTypes.LEFTHAND:
-			//Debug.Log ("looking for lefthanded items");
-			foreach(StatItem i in player.playerParty.inventory.Items){
-				if (i.itemType == Item.ItemType.WEAPON){
-					if (!i.equipped()) items.Add(i);
-					if (i.equipped() && i.owner == character) items.Add(i);
-				}
-			}
-			break;		
-
-
-		case EquipmentSlot.SlotTypes.ACCESSORY:
+		case Item.ItemType.ACCESSORY:
 			//Debug.Log ("looking for accessories");
-			foreach(StatItem i in player.playerParty.inventory.Items){
+			foreach(StatItem i in player.inventory.Items){
 				if (i.itemType == Item.ItemType.ACCESSORY){
-					if (!i.equipped()) items.Add(i);
-					if (i.equipped() && i.owner == character) items.Add(i);
+					if (!i.equipped) items.Add(i);
+					//if (i.equipped() && i.owner == character) items.Add(i);
 				}
 			}
 			break;	

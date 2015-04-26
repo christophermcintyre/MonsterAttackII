@@ -8,11 +8,14 @@ public class BaseCharacter : MonoBehaviour{
 	public string lastName;
 	public Sprite portrait;
 
-	public Party party; //change to teams?
-	public Job currentJob;
-	//public List<Job> jobsList;
-	public JobList jobList;
-	public List<EquipmentSlot> equipmentSlots;
+	public Weapon mainWeapon;
+	public Weapon offHandWeapon;
+	public Accessory accessory1;
+	public Accessory accessory2;
+
+	private JobList jobList;
+	public List<Action> actions = new List<Action> ();
+
 	public int killCount;
 	public int deathCount;
 	public int currentHp;
@@ -23,6 +26,8 @@ public class BaseCharacter : MonoBehaviour{
 
 	public Action currentAction;
 
+
+
 	void Awake () {
 		DontDestroyOnLoad (transform.gameObject);
 	}
@@ -31,45 +36,16 @@ public class BaseCharacter : MonoBehaviour{
 
 		jobList = GetComponent<JobList> ();
 		jobList.init ();
+		name = firstName;
+		actions.Add(new Attack (this));
 
-		equipmentSlots = new List<EquipmentSlot> ();
-		addEquipmentSlots ();
+		//equipmentSlots = new List<EquipmentSlot> ();
+		//addEquipmentSlots ();
 		revive (true);
-	}
-
-	public BaseCharacter(string nName, Job job){
-		name = nName;
-		addEquipmentSlots ();
-		addJob (job);
-		CurrentJob = job;
-		revive (true);
-	}
-
-	public BaseCharacter(BaseCharacter template){
-
-		//jobsList = new List<Job>();		
-		equipmentSlots = new List<EquipmentSlot> ();
-
-		name = template.name;
-		//model = template.model;
-		addEquipmentSlots ();
-		addJob (template.currentJob);
-		//CurrentJob = jobsList[0];
-		revive (true);
-
-		for(int i = 0; i < template.equipmentSlots.Count; i++){
-			if(template.equipmentSlots[i].EquippedItem != null){
-				equip ((StatItem)ItemDatabase.instance.getItemByName(template.equipmentSlots[i].EquippedItem.itemName), equipmentSlots[i]);
-			}
-		}
 	}
 
 	public void update(){
 		//Debug.Log (name+ "I'm updating");
-
-
-
-		//updateEffects ();
 		if(alive() && actionGuage < 1000){
 			actionGuage += CurrentJob.Speed;
 		}
@@ -85,53 +61,38 @@ public class BaseCharacter : MonoBehaviour{
 
 	public void performAction(List<BaseCharacter> targets){
 		//Debug.Log (name+ ": I'm performing an action.");
-		CurrentJob.actions[0].beginCharging(getRandomEnemy(targets));
-
-
+		actions[0].beginCharging(getRandomEnemy(targets));
 		reset ();
 
 	}
 
-	public void chooseAction(List<BaseCharacter> targets){
-		//Debug.Log (name+ ": I'm performing an action.");
-		CurrentJob.actions[0].beginCharging(getRandomEnemy(targets));
+	public void chooseAction(List<BaseCharacter> allies ,List<BaseCharacter> enemies){
+		//Debug.Log (Name+ ": I'm performing an action.");
+		if (this.playerControl) actions[0].beginCharging(getRandomEnemy(enemies));
+		else actions[0].beginCharging(getRandomEnemy(allies));
 		reset ();
 		
 	}
 
+	public void attack(BaseCharacter target){
+		actions [0].beginCharging (target);
+		reset ();
+	}
+
 	public BaseCharacter getRandomEnemy(List<BaseCharacter> targets) {
-		List<BaseCharacter> enemies = new List<BaseCharacter> ();
-		foreach(BaseCharacter bc in targets){
-			if(bc.party != this.party){
-				enemies.Add(bc);
-			}
-		}
-		int r = (int) (Random.value * enemies.Count);
-		BaseCharacter selectedTarget = enemies[r];
+		int r = (int) (Random.value * targets.Count);
+		BaseCharacter selectedTarget = targets[r];
 		return selectedTarget;
 	}
 
-	//public List<BaseCharacter> findEnemies(List<BaseCharacter> actives){
-	//	List<BaseCharacter> enemies = new List<BaseCharacter> ();
-	//	foreach(BaseCharacter bc in actives){
-	//		if(bc.party != this.party){
-	//			enemies.Add(bc);
-	//		}
-	//	}
-	//	return enemies;
-	//}
-
 	public void revive(bool fullRevive){
 		if (!alive ()) {
-			currentHp = 1;
+			CurrentHp = 1;
 		}
 
 		if (fullRevive) {
-			//currentHp = currentJob.MaxHP;
 			CurrentHp = jobList.getCurrentJob().MaxHP;
 			CurrentMp = jobList.getCurrentJob().MaxMP;
-
-			//currentMp = currentJob.MaxMP;
 		}
 	}
 
@@ -142,13 +103,13 @@ public class BaseCharacter : MonoBehaviour{
 	public void resetAction(){
 	}
 
-	public void addJob(Job j){
-		Debug.Log ("Adding job: " + j.Name + " to " + name);
-		j.initJob (this);
+	//public void addJob(Job j){
+	//	Debug.Log ("Adding job: " + j.Name + " to " + name);
+	//	j.initJob (this);
 		//JobsList.Add (j);
-	}
+	//}
 
-	public void addEquipmentSlots(){
+	/*public void addEquipmentSlots(){
 		equipmentSlots.Add(new EquipmentSlot(EquipmentSlot.SlotTypes.RIGHTHAND, this));
 		equipmentSlots.Add(new EquipmentSlot(EquipmentSlot.SlotTypes.LEFTHAND, this));
 		equipmentSlots.Add(new EquipmentSlot(EquipmentSlot.SlotTypes.ACCESSORY, this));
@@ -177,7 +138,7 @@ public class BaseCharacter : MonoBehaviour{
 	public void unequip(EquipmentSlot slot){
 		slot.EquippedItem.unequip();
 		slot.removeItem();
-	}
+	}*/
 
 	public void evade(){
 		}
@@ -212,52 +173,23 @@ public class BaseCharacter : MonoBehaviour{
 		killCount++;
 	}
 
-	public bool alive(){return currentHp > 0;}
+	public bool alive(){return CurrentHp > 0;}
 
 
 	public int TotalAttack(){
-		int total = 0;
-		foreach(EquipmentSlot es in equipmentSlots){
-			if (es.EquippedItem != null){
-				total += es.EquippedItem.AttackBoost;
-			}
-		}
-		return total + CurrentJob.Attack;
+		return CurrentJob.Attack;
 	}
 
 	public int TotalDefense(){		
-		int total = 0;		
-		foreach(EquipmentSlot es in equipmentSlots){
-			if (es.EquippedItem != null){
-				total += es.EquippedItem.DefenseBoost;
-				if (es.EquippedItem.itemType == Item.ItemType.ACCESSORY){
-					Accessory acc = (Accessory)es.EquippedItem;
-					total += acc.Armor;
-				}
-			}
-		}		
-		return total + CurrentJob.Attack;
+		return CurrentJob.Defense;
 	}
 
-
-	public int TotalAccuracy(){		
-		int total = 0;		
-		foreach(EquipmentSlot es in equipmentSlots){
-			if (es.EquippedItem != null){
-				total += es.EquippedItem.AccuracyBoost;
-			}
-		}		
-		return total + CurrentJob.Accuracy;
+	public int TotalAccuracy(){	
+		return CurrentJob.Accuracy;
 	}
 
-	public int TotalEvasion(){		
-		int total = 0;		
-		foreach(EquipmentSlot es in equipmentSlots){
-			if (es.EquippedItem != null){
-				total += es.EquippedItem.EvasionBoost;
-			}
-		}		
-		return total + CurrentJob.Evasion;
+	public int TotalEvasion(){	
+		return CurrentJob.Evasion;
 	}
 
 	public int TotalCritRate(){
@@ -280,7 +212,7 @@ public class BaseCharacter : MonoBehaviour{
 
 	public Job CurrentJob{
 		get{ return jobList.getCurrentJob();}
-		set{ currentJob = value;}
+		set{ Debug.Log("Unable to set job through this method");}
 	}
 
 	//public List<Job> JobsList{

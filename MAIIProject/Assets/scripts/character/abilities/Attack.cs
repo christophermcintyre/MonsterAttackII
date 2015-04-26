@@ -11,23 +11,14 @@ public class Attack : Action {
 	}
 
 	public override void execute(){
-		List<Weapon> weapons = new List<Weapon>();
-		if (executor == null) Debug.Log("Error: no executor assigned");
-		if (executor.equipmentSlots == null) Debug.Log ("Error: No equipment slots");
-		//Debug.Log (executor.name + " I have " + executor.equipmentSlots.Count + " equipment slots");
-		for(int i = 0; i < executor.equipmentSlots.Count; i++){			
-			if (executor.equipmentSlots[i].EquippedItem != null && executor.equipmentSlots[i].EquippedItem.itemType == Item.ItemType.WEAPON){
-				weapons.Add((Weapon) executor.equipmentSlots[i].EquippedItem);				
-			}
+		if (calculateHit(target, null)) {
+			target.damage(executor, calculateDmg(target, executor.mainWeapon));		
+		} 
+			
+		if (executor.offHandWeapon != null && calculateHit(target, null)) {
+			target.damage(executor, calculateDmg(target, executor.offHandWeapon));			
 		}
-		if(weapons.Count == 0){
-			if (calculateHit(target, null)) target.damage(executor, calculateDmg(target, null));			
-		} else {
-			foreach (Weapon w in weapons){
-				if(target.alive() && calculateHit(target, w)) target.damage(executor, calculateDmg(target, w));				
-			}
-		}
-		//counter = 0;
+	
 		executor.resetAction();
 
 	}
@@ -46,9 +37,9 @@ public class Attack : Action {
 	}
 	
 	public int calculateDmg(BaseCharacter target, Weapon w) {
-		int dmg = 0;
-		if (w != null) dmg = w.Damage + (int)(Random.value * (w.Damage / 2)) + executor.TotalAttack();
-		else dmg = (int) (Random.value * (executor.TotalAttack() / 2)) + executor.TotalAttack();
+		int dmg = (int)Random.value * executor.TotalAttack ();
+
+		if (w != null) dmg += w.Damage;
 		
 		if ((Random.value*100) <= executor.TotalCritRate()) {
 			dmg=(int)(executor.TotalCritStrength()*dmg);

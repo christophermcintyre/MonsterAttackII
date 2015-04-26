@@ -5,13 +5,6 @@ using System.Collections.Generic;
 public class Inventory {
 
 	private List<Item> items = new List<Item> ();
-	private Party owner;
-
-	public Inventory (Party party)	{
-		//Debug.Log ("Creating inventory");
-		owner = party;
-	}
-
 
 	public void add (Item item)	{
 		items.Add (item);
@@ -34,16 +27,9 @@ public class Inventory {
 
 	}
 
-
-	//getters and setters
-	public Party Owner {
-		get{ return owner;}
-		set{ owner = value;}
-	}
-
 	public List<Item> Items {
-		get{ return items;}
-		set{ items = value;}
+		get{ return items; }
+		set{ items = value; }
 	}
 
 }

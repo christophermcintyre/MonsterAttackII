@@ -34,7 +34,7 @@ public class StatusMenu : Menu {
 
 	public override void refresh(){
 
-		if(character.equipmentSlots[0].EquippedItem != null){
+		/*if(character.equipmentSlots[0].EquippedItem != null){
 			slots[0].item = character.equipmentSlots[0].EquippedItem;
 		}
 		
@@ -48,6 +48,22 @@ public class StatusMenu : Menu {
 		
 		if(character.equipmentSlots[3].EquippedItem != null){
 			slots[3].item = character.equipmentSlots[3].EquippedItem;
+		}*/
+
+		if(character.mainWeapon != null){
+			slots[0].item = character.mainWeapon;
+		}
+		
+		if(character.offHandWeapon != null){
+			slots[1].item = character.offHandWeapon;
+		}
+		
+		if(character.accessory1 != null){
+			slots[2].item = character.accessory1;
+		}
+		
+		if(character.accessory2 != null){
+			slots[3].item = character.accessory2;
 		}
 		
 		portrait.color = new Color32(255, 255, 255, 255);

@@ -7,6 +7,8 @@ public class JobList : MonoBehaviour {
 	public List<Job> jobs;
 	public JobIndex currentJob;
 
+	private BaseCharacter owner;
+
 	public enum JobIndex {
 		BRAWLER,
 		THIEF,
@@ -20,6 +22,9 @@ public class JobList : MonoBehaviour {
 	}
 
 	public void init () {
+
+		//owner = this.GetComponent<BaseCharacter> ();
+
 
 		jobs = new List<Job> ();
 

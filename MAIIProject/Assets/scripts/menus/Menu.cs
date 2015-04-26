@@ -8,7 +8,7 @@ public class Menu : MonoBehaviour {
 	private Animator animator;
 	private CanvasGroup canvasGroup;
 	public BaseCharacter character;
-	public EquipmentSlot slot;
+	//public EquipmentSlot slot;
 	
 	public bool IsOpen{
 		get { return animator.GetBool ("IsOpen"); }
@@ -42,7 +42,7 @@ public class Menu : MonoBehaviour {
 
 	public void DisplaySlot(EquipmentSlot displaySlot){
 
-		slot = displaySlot;
+		//slot = displaySlot;
 	}
 
 	public void Update(){

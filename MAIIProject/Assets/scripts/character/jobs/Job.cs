@@ -16,8 +16,8 @@ public class Job{
 	private int expToLevel = 100;
 	private int totalExp = 0;
 	private float levelModifier = 1.1f;
-	private int maxHP=1;
-	private int maxMP=1;
+	private int maxHP=100;
+	private int maxMP=10;
 	private int speed=15;
 	private int atk=10;
 	private int def=10;
@@ -29,13 +29,13 @@ public class Job{
 	public List<Action> actions = new List<Action>();
 
 	public Job () {
-		actions.Add (new Attack(owner));
+		//actions.Add (new Attack(owner));
 	}
 
-	public void initJob(BaseCharacter bc){		
-		owner = bc;
-		actions.Add (new Attack(bc));
-	}
+	//public void initJob(BaseCharacter bc){		
+	//	owner = bc;
+	//	actions.Add (new Attack(bc));
+	//}
 
 	public void addExp (int xp)	{
 		if (level < maxLevel) {

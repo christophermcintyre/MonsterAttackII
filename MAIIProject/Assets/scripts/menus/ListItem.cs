@@ -9,6 +9,8 @@ public class ListItem : MonoBehaviour, IPointerDownHandler {
 	public Image imageIcon;
 	public Text nameText;
 
+	public int equipmentSlotIndex;
+
 	void Start () {
 		imageIcon = gameObject.transform.GetChild (0).GetComponent<Image>();
 		nameText = gameObject.transform.GetChild (1).GetComponent<Text>();
@@ -27,12 +29,11 @@ public class ListItem : MonoBehaviour, IPointerDownHandler {
 		item = i;
 		imageIcon.sprite = i.itemIcon;
 		nameText.text = i.DisplayName;
-		if (i.equipped())	nameText.color = new Color (0, 255, 0);
+		//if (i.equipped())	nameText.color = new Color (0, 255, 0);
 	}
 
 	public void equipItem (){
-
-		Debug.Log ("I shouldn't be called!");
+		Debug.Log ("Error: ListItem.equipItem does nothing");
 		//BaseCharacter character = this.GetComponentInParent<EquipmentMenu>().slot.owner;
 		//character.equip ((StatItem)item, this.GetComponentInParent<EquipmentMenu> ().slot);
 	}

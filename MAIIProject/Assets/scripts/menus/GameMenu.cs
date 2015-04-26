@@ -22,7 +22,7 @@ public class GameMenu : Menu {
 	public override void open(){
 
 		//Debug.Log ("Updating character menu layout");
-		partyList = player.playerParty.getMembers ();
+		partyList = player.playerParty;
 
 
 		foreach (BaseCharacter member in partyList) {		
@@ -32,8 +32,8 @@ public class GameMenu : Menu {
 			names[partyList.IndexOf(member)].text = member.Name;
 			jobs[partyList.IndexOf(member)].text = "LVL " + member.CurrentJob.Level + " " + member.CurrentJob.Name;
 			vitals[partyList.IndexOf(member)].text = "HP " + member.CurrentHp + "/" + member.CurrentJob.MaxHP;
-			if (member.equipmentSlots[0].EquippedItem != null) {
-				weapons[partyList.IndexOf(member)].text = member.equipmentSlots[0].EquippedItem.DisplayName;
+			if (member.mainWeapon != null) {
+				weapons[partyList.IndexOf(member)].text = member.mainWeapon.DisplayName;
 			} else { weapons[partyList.IndexOf(member)].text = "Unarmed";
 			}
 		}

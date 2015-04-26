@@ -7,23 +7,24 @@ public class MenuManager : MonoBehaviour {
 
 	public Menu currentMenu;
 	public BaseCharacter selectedCharacter;
-	public EquipmentSlot selectedSlot;
+	public int selectedSlot;
+	public Item.ItemType itemType;
 
 	public void Start(){
 
-		if (player.playerParty != null) selectedCharacter = player.playerParty.getMembers ()[0];
+		if (player.playerParty != null) selectedCharacter = player.playerParty[0];
 
 		//showMenu (currentMenu);
 	}
 
 	public void selectCharacter(int characterIndex) {
 
-		selectedCharacter = player.playerParty.getMembers ()[characterIndex];
+		selectedCharacter = player.playerParty[characterIndex];
 
 	}
 
 	public void selectSlot(int itemSlot) {
-		selectedSlot = selectedCharacter.equipmentSlots [itemSlot];
+		//selectedSlot = selectedCharacter.equipmentSlots [itemSlot];
 	}
 
 	public void closeMenu (Menu menu){
@@ -40,7 +41,7 @@ public class MenuManager : MonoBehaviour {
 		currentMenu = menu;
 		currentMenu.IsOpen = true;
 		currentMenu.DisplayCharacter (selectedCharacter);
-		currentMenu.DisplaySlot (selectedSlot);
+		//currentMenu.DisplaySlot (selectedSlot);
 		currentMenu.open ();
 	}
 }

@@ -5,12 +5,12 @@ using System.Collections.Generic;
 
 public class BattleManager : MonoBehaviour {
 
-	public GameObject player; //FIND THE PLAYER
+	public Player player; //FIND THE PLAYER
 
 	public BattleDatabase battleDatabase;
 	public Battle battle;
-	private Party playerParty;
-	private Party aiParty;
+	private List<BaseCharacter> playerParty;
+	private List<BaseCharacter> aiParty;
 	
 	public List<BaseCharacter> combatants = new List<BaseCharacter>();
 	public List<BaseCharacter> actionQueue = new List<BaseCharacter>();
@@ -29,7 +29,6 @@ public class BattleManager : MonoBehaviour {
 	public float counter;
 	public float battleSpeed = 0.1f;
 
-	//change to list of vectors??
 	public List<Transform> playerPositions = new List<Transform> ();
 	public List<Transform> enemyPositions = new List<Transform> ();
 
@@ -44,51 +43,42 @@ public class BattleManager : MonoBehaviour {
 		EXIT
 	}
 
-	public void load(Battle b){
-		Debug.Log ("This probably does nothing");
-		//battle = b;
+	void Awake(){
+		player = (Player)GameObject.FindWithTag("Player").GetComponent<Player>();
 	}
 
 	void Start() {
 
-		//player = (Player)FindObjectOfType (typeof(Player));
-		player = GameObject.FindWithTag("Player");
-		battleDatabase = player.GetComponent<Player> ().battleDatabase;
-		//player = go.GetComponent<Player> ();
+		Debug.Log ("Battle start");
 
 		commandMenuPanel.SetActive (false);
 		counter = Time.fixedTime + battleSpeed;
-		Debug.Log ("Battle start");
 
-
-		//battle = Player.instance.battleDatabase.battleList [0];
-		battle = battleDatabase.getBattleByName ("Training Battle");
-		//battle = battleDatabase.battleList [0];
+		battle = player.battleDatabase.getBattleByName("Training Battle");
 
 		playerParty = player.GetComponent<Player> ().playerParty;
-		aiParty = battle.enemyParty;
-		combatants.AddRange(playerParty.getMembers());
-		combatants.AddRange(aiParty.getMembers());
+		aiParty = new List<BaseCharacter> ();
 
-		for(int i = 0; i < playerParty.getMembers().Count ; i++){
-			Debug.Log("Moving into position: " + playerParty.getMembers()[i].Name);
-			playerParty.getMembers()[i].transform.position = playerPositions[i].position;
+		for(int i = 0; i < playerParty.Count ; i++){
+			playerParty[i].transform.position = playerPositions[i].position;
+			playerParty[i].transform.rotation = playerPositions[i].rotation;
 		}
 
-		for(int i = 0; i < aiParty.getMembers().Count ; i++){
-				Debug.Log("Moving into position: " + aiParty.getMembers()[i].Name);
-				aiParty.getMembers()[i].transform.position = enemyPositions[i].position;
+		for(int i = 0; i < battle.enemyParty.Count ; i++){
+			aiParty.Add ((BaseCharacter)Instantiate(battle.enemyParty[i], enemyPositions[i].position, enemyPositions[i].rotation));
+			aiParty[i].initCharacter();
 		}
 
-
-
-		if (battle == null)	Debug.Log ("Error: No battle loaded");
+		combatants.AddRange(playerParty);
+		combatants.AddRange(aiParty);
 
 		if (battle != null)	currentState = BattleStates.START;
-
 	}
 
 	void FixedUpdate(){
+
+		displayCharacterStats ();
+
 		if (Time.fixedTime >= counter) {
 			update();
 			counter = Time.fixedTime + battleSpeed;
@@ -99,7 +89,7 @@ public class BattleManager : MonoBehaviour {
 
 		//Debug.Log ("Battle updating");
 
-		displayCharacterStats ();
+
 
 		switch(currentState){
 
@@ -123,38 +113,29 @@ public class BattleManager : MonoBehaviour {
 			//Debug.Log("IDLE State");
 
 			if (started) {
-				if (!playerParty.alive ()) {
-					currentState = BattleStates.LOSE;
-				}
-				if (!aiParty.alive ()) {
-					currentState = BattleStates.WIN;
-				}
+				checkWinCondition();
+				checkLoseCondition();
 			}
-
-			//delta counter
 
 			foreach(BaseCharacter c in combatants){
 				c.update();
 				if(c.ready()){
 					if (c.playerControl) {
-						openCommandMenu(c);
-					} else c.chooseAction(combatants);
+						if (!commandMenu.isActiveAndEnabled){
+							openCommandMenu(c);
+						}
+					} else c.chooseAction(playerParty, aiParty);
 					//actionQueue.Add(c);
 				}
 			}
 
-			if (actionQueue.Count > 0) currentState = BattleStates.ACTION;
+			//if (actionQueue.Count > 0) currentState = BattleStates.ACTION;
 
 			break;
 
 		case BattleStates.ACTION:
 
 			Debug.Log("ACTION State");
-
-			foreach(BaseCharacter q in actionQueue){
-				currentState = BattleStates.ACTION;
-				q.chooseAction(combatants);
-			}
 
 			actionQueue.Clear();
 
@@ -164,23 +145,25 @@ public class BattleManager : MonoBehaviour {
 
 		case BattleStates.LOSE:
 			//Debug.Log("LOSE State");
-			playerParty.defeat();
+			player.defeat();
 			currentState = BattleStates.EXIT;
 			break;
 
 		case BattleStates.WIN:
 			//Debug.Log("WIN State");
-			playerParty.addMoney(battle.moneyValue);
-			playerParty.addExp(battle.expValue, true);
+			player.addMoney(battle.moneyValue);
+			player.addExp(battle.expValue, true);
 			currentState = BattleStates.EXIT;
 			break;
 
 		case BattleStates.EXIT:
 			//Debug.Log("EXIT State");
 			combatants.Clear();
-			aiParty.getMembers().Clear();
+			aiParty.Clear();
 			aiParty = null;
-			playerParty.reset();
+			foreach (BaseCharacter c in playerParty){
+				c.reset();
+			}
 
 			Application.LoadLevel("main");
 			break;
@@ -188,14 +171,34 @@ public class BattleManager : MonoBehaviour {
 		}
 	}
 
+	public void checkWinCondition(){
+		foreach (BaseCharacter c in aiParty){
+			if (c.alive()) {
+				//Do nothing, the enemy is still alive
+				return;
+			}
+		}
+		currentState = BattleStates.WIN;				
+	}
+
+	public void checkLoseCondition(){
+		foreach (BaseCharacter c in playerParty){
+			if (c.alive()) {
+				//Do nothing, the player is still alive
+				return;
+			}
+		}
+		currentState = BattleStates.LOSE;		
+	}
+
 	public void displayCharacterStats(){
 
-		for (int i = 0; i < playerParty.getMembers().Count; i++) {
+		for (int i = 0; i < playerParty.Count; i++) {
 
-			atbGauges[i].fillAmount = playerParty.getMembers()[i].ActionGuage / 1000.0f;
-			characterNames[i].text = playerParty.getMembers()[i].name;
-			characterStats[i].text = playerParty.getMembers()[i].CurrentHp + "/" + playerParty.getMembers()[i].CurrentJob.MaxHP;
-			characterMP[i].text = playerParty.getMembers()[i].CurrentMp + "/" + playerParty.getMembers()[i].CurrentJob.MaxMP;
+			atbGauges[i].fillAmount = playerParty[i].ActionGuage / 1000.0f;
+			characterNames[i].text = playerParty[i].name;
+			characterStats[i].text = playerParty[i].CurrentHp + "/" + playerParty[i].CurrentJob.MaxHP;
+			characterMP[i].text = playerParty[i].CurrentMp + "/" + playerParty[i].CurrentJob.MaxMP;
 
 
 		}
