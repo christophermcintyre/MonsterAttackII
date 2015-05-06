@@ -18,9 +18,7 @@ public class StatusMenu : Menu {
 	public Text accuracy;
 	public Text evasion;
 
-	public void Start(){
-
-	}
+	public void Start(){}
 
 	public override void close(){
 		for (int i = 0; i < slots.Length; i++) {
@@ -33,52 +31,34 @@ public class StatusMenu : Menu {
 	}
 
 	public override void refresh(){
-
-		/*if(character.equipmentSlots[0].EquippedItem != null){
-			slots[0].item = character.equipmentSlots[0].EquippedItem;
+		if(activeCharacter.mainWeapon != null){
+			slots[0].item = activeCharacter.mainWeapon;
 		}
 		
-		if(character.equipmentSlots[1].EquippedItem != null){
-			slots[1].item = character.equipmentSlots[1].EquippedItem;
+		if(activeCharacter.offHandWeapon != null){
+			slots[1].item = activeCharacter.offHandWeapon;
 		}
 		
-		if(character.equipmentSlots[2].EquippedItem != null){
-			slots[2].item = character.equipmentSlots[2].EquippedItem;
+		if(activeCharacter.accessory1 != null){
+			slots[2].item = activeCharacter.accessory1;
 		}
 		
-		if(character.equipmentSlots[3].EquippedItem != null){
-			slots[3].item = character.equipmentSlots[3].EquippedItem;
-		}*/
-
-		if(character.mainWeapon != null){
-			slots[0].item = character.mainWeapon;
-		}
-		
-		if(character.offHandWeapon != null){
-			slots[1].item = character.offHandWeapon;
-		}
-		
-		if(character.accessory1 != null){
-			slots[2].item = character.accessory1;
-		}
-		
-		if(character.accessory2 != null){
-			slots[3].item = character.accessory2;
+		if(activeCharacter.accessory2 != null){
+			slots[3].item = activeCharacter.accessory2;
 		}
 		
 		portrait.color = new Color32(255, 255, 255, 255);
-		portrait.sprite = character.Portrait;
+		portrait.sprite = activeCharacter.Portrait;
 		
-		characterName.text = character.Name;
-		characterJob.text = "LVL " + character.CurrentJob.Level + " " + character.CurrentJob.Name;
+		characterName.text = activeCharacter.Name;
+		characterJob.text = "LVL " + activeCharacter.CurrentJob.Level + " " + activeCharacter.CurrentJob.Name;
 		
-		experience.text = "EXP: " + character.CurrentJob.CurrentExp + "/" + character.CurrentJob.ExpToLevel;
-		health.text = "HP:" + character.CurrentHp + "/" + character.CurrentJob.MaxHP;
-		mana.text = "MP: " + character.CurrentMp + "/" + character.CurrentJob.MaxMP;
-		attack.text = "Attack: " + character.TotalAttack();
-		defense.text = "Defense: " + character.TotalDefense();
-		accuracy.text = "Accuracy: " + character.TotalAccuracy();
-		evasion.text = "Evasion: " + character.TotalEvasion();
-
+		experience.text = "EXP: " + activeCharacter.CurrentJob.CurrentExp + "/" + activeCharacter.CurrentJob.ExpToLevel;
+		health.text = "HP:" + activeCharacter.CurrentHp + "/" + activeCharacter.CurrentJob.MaxHP;
+		mana.text = "MP: " + activeCharacter.CurrentMp + "/" + activeCharacter.CurrentJob.MaxMP;
+		attack.text = "Attack: " + activeCharacter.TotalAttack();
+		defense.text = "Defense: " + activeCharacter.TotalDefense();
+		accuracy.text = "Accuracy: " + activeCharacter.TotalAccuracy();
+		evasion.text = "Evasion: " + activeCharacter.TotalEvasion();
 	}
 }

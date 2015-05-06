@@ -50,7 +50,10 @@
      <Compile Include="Assets\scripts\BattleDatabase.cs" />
      <Compile Include="Assets\scripts\BattleManager.cs" />
      <Compile Include="Assets\scripts\CameraController.cs" />
+     <Compile Include="Assets\scripts\DamagePopUp.cs" />
+     <Compile Include="Assets\scripts\Element.cs" />
      <Compile Include="Assets\scripts\Follower.cs" />
+     <Compile Include="Assets\scripts\GameStart.cs" />
      <Compile Include="Assets\scripts\Player.cs" />
      <Compile Include="Assets\scripts\PlayerController.cs" />
      <Compile Include="Assets\scripts\Slot.cs" />
@@ -59,6 +62,8 @@
      <Compile Include="Assets\scripts\character\CharacterDatabase.cs" />
      <Compile Include="Assets\scripts\character\abilities\Action.cs" />
      <Compile Include="Assets\scripts\character\abilities\Attack.cs" />
+     <Compile Include="Assets\scripts\character\abilities\Bash.cs" />
+     <Compile Include="Assets\scripts\character\abilities\Cure.cs" />
      <Compile Include="Assets\scripts\character\jobs\BlackMage.cs" />
      <Compile Include="Assets\scripts\character\jobs\Brawler.cs" />
      <Compile Include="Assets\scripts\character\jobs\DarkKnight.cs" />
@@ -71,6 +76,7 @@
      <Compile Include="Assets\scripts\character\jobs\Warrior.cs" />
      <Compile Include="Assets\scripts\character\jobs\WhiteMage.cs" />
      <Compile Include="Assets\scripts\items\Accessory.cs" />
+     <Compile Include="Assets\scripts\items\Consumable.cs" />
      <Compile Include="Assets\scripts\items\EquipmentSlot.cs" />
      <Compile Include="Assets\scripts\items\Inventory.cs" />
      <Compile Include="Assets\scripts\items\Item.cs" />
@@ -81,6 +87,7 @@
      <Compile Include="Assets\scripts\menus\CommandMenu.cs" />
      <Compile Include="Assets\scripts\menus\EquipmentMenu.cs" />
      <Compile Include="Assets\scripts\menus\GameMenu.cs" />
+     <Compile Include="Assets\scripts\menus\InventoryMenu.cs" />
      <Compile Include="Assets\scripts\menus\ItemList.cs" />
      <Compile Include="Assets\scripts\menus\ListCharacter.cs" />
      <Compile Include="Assets\scripts\menus\ListItem.cs" />

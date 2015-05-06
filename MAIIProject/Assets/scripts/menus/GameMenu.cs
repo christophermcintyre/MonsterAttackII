@@ -22,7 +22,7 @@ public class GameMenu : Menu {
 	public override void open(){
 
 		//Debug.Log ("Updating character menu layout");
-		partyList = player.playerParty;
+		partyList = Player.Instance.playerParty;
 
 
 		foreach (BaseCharacter member in partyList) {		

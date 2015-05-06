@@ -40,10 +40,10 @@ public class EquipmentMenu : Menu {
 		displayList (validItems());
 
 		portrait.color = new Color32(255, 255, 255, 255);
-		portrait.sprite = character.Portrait;
+		portrait.sprite = activeCharacter.Portrait;
 		
-		characterName.text = character.Name;
-		characterJob.text = "LVL " + character.CurrentJob.Level + " " + character.CurrentJob.Name;
+		characterName.text = activeCharacter.Name;
+		characterJob.text = "LVL " + activeCharacter.CurrentJob.Level + " " + activeCharacter.CurrentJob.Name;
 
 		refresh ();
 	}
@@ -64,7 +64,7 @@ public class EquipmentMenu : Menu {
 		}
 
 		if (selectedItem == null) {
-			selectedItem = itemDisplayList[0].item;
+			selectedItem = (StatItem)itemDisplayList[0].item;
 		}
 		
 		if (selectedItem != null) {
@@ -95,35 +95,43 @@ public class EquipmentMenu : Menu {
 		switch (selectedSlot) {
 
 		case 0:
-			if (character.mainWeapon != null) {
-				character.mainWeapon.equipped = false;
+			if (activeCharacter.mainWeapon != null) {
+				//character.mainWeapon.equipped = false;
+				player.inventory.add(activeCharacter.mainWeapon);
 			}
-			character.mainWeapon = (Weapon)selectedItem;
-			selectedItem.equipped = true;
+			activeCharacter.mainWeapon = (Weapon)selectedItem;
+			player.inventory.Items.Remove(selectedItem);
+			//selectedItem.equipped = true;
 			break;
 
 		case 1:
-			if (character.offHandWeapon != null) {
-				character.offHandWeapon.equipped = false;
+			if (activeCharacter.offHandWeapon != null) {
+				//character.offHandWeapon.equipped = false;
+				player.inventory.add(activeCharacter.offHandWeapon);
 			}
-			character.offHandWeapon = (Weapon)selectedItem;
-			selectedItem.equipped = true;
+			activeCharacter.offHandWeapon = (Weapon)selectedItem;
+			player.inventory.Items.Remove(selectedItem);
+			//selectedItem.equipped = true;
 			break;
 
 		case 2:
-			if (character.accessory1 != null) {
-				character.accessory1.equipped = false;
+			if (activeCharacter.accessory1 != null) {
+				//character.accessory1.equipped = false;
+				player.inventory.add(activeCharacter.accessory1);
 			}
-			character.accessory1 = (Accessory)selectedItem;
-			selectedItem.equipped = true;
+			activeCharacter.accessory1 = (Accessory)selectedItem;
+			player.inventory.Items.Remove(selectedItem);
+			//selectedItem.equipped = true;
 			break;
 
 		case 3:
-			if (character.accessory2 != null) {
-				character.accessory2.equipped = false;
+			if (activeCharacter.accessory2 != null) {
+				//character.accessory2.equipped = false;
+				player.inventory.add(activeCharacter.accessory2);
 			}
-			character.accessory2 = (Accessory)selectedItem;
-			selectedItem.equipped = true;
+			activeCharacter.accessory2 = (Accessory)selectedItem;
+			player.inventory.Items.Remove(selectedItem);
+			//selectedItem.equipped = true;
 			break;
 		}
 

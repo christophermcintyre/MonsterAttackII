@@ -4,12 +4,26 @@ using System.Collections.Generic;
 
 public class ItemDatabase : MonoBehaviour {
 
-	public static ItemDatabase instance;
-	private static List<Item> items = new List<Item>();
+	private static ItemDatabase instance = null;
+	
+	public static ItemDatabase Instance {
+		get {
+			if (instance == null) {
+				Debug.Log("Instancing a new ItemDatabase");
+				GameObject go = Instantiate(Resources.Load ("Prefab/ItemDatabase")) as GameObject;
+				go.name = "Item Database";
+			}
+			return instance;
+		}
+	}
+
+
+	private List<Item> items = new List<Item>();
 
 	void Awake(){
-		DontDestroyOnLoad (transform.gameObject);
 		instance = this;
+		buildItems ();
+		DontDestroyOnLoad (transform.gameObject);
 		//buildItems ();
 	}
 
@@ -78,7 +92,9 @@ public class ItemDatabase : MonoBehaviour {
 		items.Add(new Weapon("glove0", "Leather Gloves", 10, Weapon.WeaponTypes.GLOVE, 18, 100));
 
 		//Daggers
-		items.Add(new Weapon("dagger0", "Dagger", 10, Weapon.WeaponTypes.DAGGER, 24, 150));
+		Weapon dagger0 = new Weapon("dagger0", "Dagger", 10, Weapon.WeaponTypes.DAGGER, 24, 150);
+		dagger0.elementalProperty = Element.SLASH;
+		items.Add (dagger0);
 
 		//Staffs and Rods
 		items.Add (new Weapon ("staff0", "Novice Staff", 10, Weapon.WeaponTypes.STAFF, 30, 300));

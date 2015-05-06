@@ -1,14 +1,17 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\scripts\menus\ListCharacter.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\scripts\Player.cs">
     <Files>
-      <File FileName="Assets\scripts\character\BaseCharacter.cs" Line="78" Column="18" />
-      <File FileName="Assets\scripts\BattleManager.cs" Line="124" Column="23" />
-      <File FileName="Assets\scripts\character\CharacterDatabase.cs" Line="31" Column="11" />
-      <File FileName="Assets\scripts\menus\CommandMenu.cs" Line="34" Column="28" />
-      <File FileName="Assets\scripts\menus\ListItem.cs" Line="35" Column="27" />
-      <File FileName="Assets\scripts\menus\EquipmentMenu.cs" Line="30" Column="1" />
-      <File FileName="Assets\scripts\menus\ListCharacter.cs" Line="39" Column="59" />
+      <File FileName="Assets\scripts\character\BaseCharacter.cs" Line="72" Column="8" />
+      <File FileName="Assets\scripts\BattleManager.cs" Line="1" Column="1" />
+      <File FileName="Assets\scripts\character\abilities\Attack.cs" Line="1" Column="1" />
+      <File FileName="Assets\scripts\character\abilities\Bash.cs" Line="1" Column="1" />
+      <File FileName="Assets\scripts\character\abilities\Action.cs" Line="1" Column="1" />
+      <File FileName="Assets\scripts\character\abilities\Cure.cs" Line="1" Column="1" />
+      <File FileName="Assets\scripts\GameStart.cs" Line="9" Column="28" />
+      <File FileName="Assets\scripts\menus\GameMenu.cs" Line="38" Column="5" />
+      <File FileName="Assets\scripts\Player.cs" Line="38" Column="17" />
+      <File FileName="Assets\scripts\character\CharacterDatabase.cs" Line="40" Column="5" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

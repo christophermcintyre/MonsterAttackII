@@ -5,26 +5,30 @@ using System.Collections;
 
 public class ListItem : MonoBehaviour, IPointerDownHandler {
 
-	public StatItem item;
+	public Item item;
 	public Image imageIcon;
 	public Text nameText;
 
-	public int equipmentSlotIndex;
+	//public int equipmentSlotIndex;
 
 	void Start () {
+
+		//Debug.Log ("parent is: " + this.transform.parent);
 		imageIcon = gameObject.transform.GetChild (0).GetComponent<Image>();
 		nameText = gameObject.transform.GetChild (1).GetComponent<Text>();
 	}
 
 	public void OnPointerDown(PointerEventData data) {
 		if (data.button == PointerEventData.InputButton.Left) {
-			GetComponentInParent<EquipmentMenu>().selectedItem = item;
+
+			GetComponentInParent<EquipmentMenu>().selectedItem = (StatItem)item;
+
 			GetComponentInParent<EquipmentMenu>().refresh();
 			nameText.color = new Color (255, 255, 0);
 		}
 	}
 
-	public void displayItem(StatItem i) {
+	public void displayItem(Item i) {
 		Start ();
 		item = i;
 		imageIcon.sprite = i.itemIcon;

@@ -83,6 +83,7 @@ public class Weapon : StatItem {
 		DisplayName = template.DisplayName;
 		itemIcon = template.itemIcon;
 		itemType = ItemType.WEAPON;
+		elementalProperty = template.elementalProperty;
 		weaponType = template.WeaponType;
 		itemValue = template.itemValue;
 		Damage = template.Damage;

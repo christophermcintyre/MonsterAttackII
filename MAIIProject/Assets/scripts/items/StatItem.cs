@@ -9,6 +9,8 @@ public class StatItem : Item {
 	private int level;
 	private int maxLevel;
 
+	public Element elementalProperty = Element.BLUNT;
+
 	private int currentExp; //experience towards next level
 	public int expToLevel;
 	private int totalExp;
@@ -43,7 +45,7 @@ public class StatItem : Item {
 	public void unequip(){
 		//owner.unequip(this);
 		//owner = null;
-		//Debug.Log(DisplayName + " Unequipped.");
+		Debug.Log("Function unavailable");
 	}
 
 

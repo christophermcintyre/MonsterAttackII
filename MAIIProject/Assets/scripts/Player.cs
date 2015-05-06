@@ -4,9 +4,22 @@ using System.Collections.Generic;
 
 public class Player : MonoBehaviour {
 
-	public ItemDatabase itemDatabase;
-	public CharacterDatabase characterDatabase;
-	public BattleDatabase battleDatabase;
+	//public ItemDatabase itemDatabase;
+	//public CharacterDatabase characterDatabase;
+	//public BattleDatabase battleDatabase;
+
+	private static Player instance = null;
+	
+	public static Player Instance {
+		get {
+			if (instance == null) {
+				Debug.Log("Instancing a new Player");
+				GameObject go = Instantiate(Resources.Load ("Prefab/Player")) as GameObject;
+				go.name = "Player";
+			}
+			return instance;
+		}
+	}
 
 	public string playerName;
 	public List<BaseCharacter> playerParty;
@@ -16,39 +29,47 @@ public class Player : MonoBehaviour {
 	private int wins;
 	private int defeats;
 
+
 	void Awake(){
-
+		instance = this;
 		DontDestroyOnLoad (transform.gameObject);
-
 	}
 
 	void Start () {
 
+		//Debug.Log ("Starting Player");
+
 		playerName = "Player";
 		inventory = new Inventory ();
 
-		playerParty.Add(characterDatabase.getCharacterByName("Calais"));
-		playerParty.Add(characterDatabase.getCharacterByName("Zetes"));
+		playerParty.Add(CharacterDatabase.Instance.getCharacterByName("Calais"));
+		playerParty[0].mainWeapon = (Weapon)ItemDatabase.Instance.getItemByName("Dagger");
+		playerParty[0].accessory1 = (Accessory)ItemDatabase.Instance.getItemByName ("Bandit Neckerchief");
 
-		inventory.add (itemDatabase.getItemByName ("Spiked Bell"));
-		inventory.add (itemDatabase.getItemByName ("Magic Bell"));
-		inventory.add (itemDatabase.getItemByName ("Dagger"));
-		inventory.add (itemDatabase.getItemByName ("Apprentice Wand"));
-		inventory.add (itemDatabase.getItemByName ("Novice Staff"));
-		inventory.add (itemDatabase.getItemByName ("Leather Gloves"));
-		inventory.add (itemDatabase.getItemByName ("Wooden Sword"));
-		inventory.add (itemDatabase.getItemByName ("Bronze Sword"));
-		inventory.add (itemDatabase.getItemByName ("Maple Harp"));
-		inventory.add (itemDatabase.getItemByName ("Slingshot"));
-		inventory.add (itemDatabase.getItemByName ("Teddy Bear"));
-		inventory.add (itemDatabase.getItemByName ("Plush Bunny"));
-		inventory.add (itemDatabase.getItemByName ("Boomerang"));
+		playerParty.Add(CharacterDatabase.Instance.getCharacterByName("Zetes"));
+		playerParty[1].mainWeapon = (Weapon)ItemDatabase.Instance.getItemByName("Leather Gloves");
+		playerParty[1].accessory1 = (Accessory)ItemDatabase.Instance.getItemByName ("Lucky Bell");
+
+
+		inventory.add (ItemDatabase.Instance.getItemByName ("Wooden Sword"));
+
+		//inventory.add (itemDatabase.getItemByName ("Dagger"));
+		//inventory.add (itemDatabase.getItemByName ("Apprentice Wand"));
+		//inventory.add (itemDatabase.getItemByName ("Novice Staff"));
+		//inventory.add (itemDatabase.getItemByName ("Leather Gloves"));
+		//inventory.add (itemDatabase.getItemByName ("Bronze Sword"));
+		//inventory.add (itemDatabase.getItemByName ("Maple Harp"));
+		//inventory.add (itemDatabase.getItemByName ("Slingshot"));
+		//inventory.add (itemDatabase.getItemByName ("Teddy Bear"));
+		//inventory.add (itemDatabase.getItemByName ("Plush Bunny"));
+		//inventory.add (itemDatabase.getItemByName ("Boomerang"));
 		
-		inventory.add (itemDatabase.getItemByName ("Wool Cape"));
-		inventory.add (itemDatabase.getItemByName ("Silk Cape"));
-		inventory.add (itemDatabase.getItemByName ("Green Ribbon"));
-		inventory.add (itemDatabase.getItemByName ("Silver Circlet"));
-		inventory.add (itemDatabase.getItemByName ("Bandit Neckerchief"));
+		//inventory.add (itemDatabase.getItemByName ("Wool Cape"));
+		//inventory.add (itemDatabase.getItemByName ("Silk Cape"));
+		//inventory.add (itemDatabase.getItemByName ("Green Ribbon"));
+		//inventory.add (itemDatabase.getItemByName ("Silver Circlet"))
+		inventory.add (ItemDatabase.Instance.getItemByName ("Spiked Bell"));
+		inventory.add (ItemDatabase.Instance.getItemByName ("Magic Bell"));;
 
 	}
 
@@ -77,8 +98,6 @@ public class Player : MonoBehaviour {
 		funds -= f;
 		if (funds < 0)	funds = 0;
 	}
-
-	//Do I need to add a player team?
 
 	public void addExp(int xp, bool shareWithDefeated){
 		

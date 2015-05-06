@@ -21,10 +21,12 @@ public class BaseCharacter : MonoBehaviour{
 	public int currentHp;
 	public int currentMp;
 	public int actionGuage;
+	public int chargeCounter;
 
 	public bool playerControl;
 
 	public Action currentAction;
+	public BaseCharacter currentTarget;
 
 
 
@@ -33,11 +35,12 @@ public class BaseCharacter : MonoBehaviour{
 	}
 
 	public void initCharacter(){
-
 		jobList = GetComponent<JobList> ();
 		jobList.init ();
 		name = firstName;
-		actions.Add(new Attack (this));
+		actions.Add (new Attack (this));
+		actions.Add (new Bash (this));
+		actions.Add (new Cure (this));
 
 		//equipmentSlots = new List<EquipmentSlot> ();
 		//addEquipmentSlots ();
@@ -49,34 +52,30 @@ public class BaseCharacter : MonoBehaviour{
 		if(alive() && actionGuage < 1000){
 			actionGuage += CurrentJob.Speed;
 		}
-		if (currentAction != null && ActionGuage >= currentAction.chargeTime ){
-			currentAction.execute();
-			currentAction = null;
+
+		if (currentAction != null) {
+			chargeCounter += CurrentJob.Speed;
+
+			if (chargeCounter >= currentAction.chargeTime ){
+				currentAction.execute();
+			}
 		}
 	}
 
 	public bool ready(){
-		return (actionGuage >= 1000);
+		return (actionGuage >= 1000 && currentAction == null);
 	}
 
-	public void performAction(List<BaseCharacter> targets){
-		//Debug.Log (name+ ": I'm performing an action.");
-		actions[0].beginCharging(getRandomEnemy(targets));
-		reset ();
-
-	}
-
-	public void chooseAction(List<BaseCharacter> allies ,List<BaseCharacter> enemies){
-		//Debug.Log (Name+ ": I'm performing an action.");
-		if (this.playerControl) actions[0].beginCharging(getRandomEnemy(enemies));
-		else actions[0].beginCharging(getRandomEnemy(allies));
-		reset ();
-		
+	public void chooseRandomAction(List<BaseCharacter> allies, List<BaseCharacter> enemies){
+		currentAction = actions [(int)(Random.value * actions.Count)];
+		if (currentAction.targetType == Action.TargetType.ENEMY_SINGLE) currentAction.beginCharging (getRandomEnemy (allies));
+		else if (currentAction.targetType == Action.TargetType.ALLY_SINGLE)	currentAction.beginCharging (getRandomEnemy (enemies));
 	}
 
 	public void attack(BaseCharacter target){
+		currentAction = actions [0];
 		actions [0].beginCharging (target);
-		reset ();
+		this.GetComponent<Animation>().CrossFade("Battle_Idle");
 	}
 
 	public BaseCharacter getRandomEnemy(List<BaseCharacter> targets) {
@@ -97,10 +96,15 @@ public class BaseCharacter : MonoBehaviour{
 	}
 
 	public void reset(){
+		if (playerControl) this.GetComponent<Animation>().CrossFade("Idle");
+
 		ActionGuage = 0;
+		resetAction ();
 	}
 
 	public void resetAction(){
+		chargeCounter = 0;
+		currentAction = null;
 	}
 
 	//public void addJob(Job j){
@@ -140,13 +144,12 @@ public class BaseCharacter : MonoBehaviour{
 		slot.removeItem();
 	}*/
 
-	public void evade(){
-		}
+	public void evade(){}
 
-	public void damage(BaseCharacter attacker, int dmg){
+	public void damage(BaseCharacter attacker, int dmg, Element e){
 
 		if (dmg < 0) dmg = 0;
-		Debug.Log (attacker.name + " strikes " + name + " for " + dmg + " damage." );
+
 		CurrentHp -= dmg;
 		if (CurrentHp <= 0) {
 			CurrentHp = 0;
@@ -166,7 +169,7 @@ public class BaseCharacter : MonoBehaviour{
 		CurrentHp = 0;
 		reset ();
 		deathCount++;
-		this.GetComponent<Animation>().CrossFade("Idle");
+		//this.GetComponent<Animation>().CrossFade("Knockout");
 	}
 
 	public void addKill(){
@@ -212,7 +215,7 @@ public class BaseCharacter : MonoBehaviour{
 
 	public Job CurrentJob{
 		get{ return jobList.getCurrentJob();}
-		set{ Debug.Log("Unable to set job through this method");}
+		private set{ Debug.Log("Unable to set job through this method");}
 	}
 
 	//public List<Job> JobsList{

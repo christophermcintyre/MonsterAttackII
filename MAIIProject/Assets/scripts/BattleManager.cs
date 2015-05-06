@@ -54,7 +54,7 @@ public class BattleManager : MonoBehaviour {
 		commandMenuPanel.SetActive (false);
 		counter = Time.fixedTime + battleSpeed;
 
-		battle = player.battleDatabase.getBattleByName("Training Battle");
+		battle = BattleDatabase.Instance.getBattleByName("Training Battle");
 
 		playerParty = player.GetComponent<Player> ().playerParty;
 		aiParty = new List<BaseCharacter> ();
@@ -124,7 +124,7 @@ public class BattleManager : MonoBehaviour {
 						if (!commandMenu.isActiveAndEnabled){
 							openCommandMenu(c);
 						}
-					} else c.chooseAction(playerParty, aiParty);
+					} else c.chooseRandomAction(playerParty, aiParty);
 					//actionQueue.Add(c);
 				}
 			}

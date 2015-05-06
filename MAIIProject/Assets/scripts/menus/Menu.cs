@@ -7,8 +7,8 @@ public class Menu : MonoBehaviour {
 
 	private Animator animator;
 	private CanvasGroup canvasGroup;
-	public BaseCharacter character;
-	//public EquipmentSlot slot;
+	public BaseCharacter activeCharacter;
+	public MenuManager menuManager;
 	
 	public bool IsOpen{
 		get { return animator.GetBool ("IsOpen"); }
@@ -16,9 +16,8 @@ public class Menu : MonoBehaviour {
 	}
 
 	public void Awake(){
-
 		player = (Player)FindObjectOfType (typeof(Player));
-
+		menuManager = (MenuManager)FindObjectOfType (typeof(MenuManager));
 		animator = GetComponent<Animator> ();
 		canvasGroup = GetComponent<CanvasGroup> ();
 		
@@ -26,24 +25,20 @@ public class Menu : MonoBehaviour {
 		rect.offsetMax = rect.offsetMin = new Vector2 (0, 0);		
 	}
 
-	public virtual void open(){
+	public virtual void open(){}
+
+	public virtual void close(){}
+
+	public virtual void refresh(){}
+
+	public void selectCharacter(int characterIndex) {		
+		activeCharacter = player.playerParty[characterIndex];		
 	}
 
-	public virtual void close(){
-	}
-
-	public virtual void refresh(){
-	}
-
-	public void DisplayCharacter(BaseCharacter displayCharacter){
-
-		character = displayCharacter;
-	}
-
-	public void DisplaySlot(EquipmentSlot displaySlot){
+	//public void DisplaySlot(EquipmentSlot displaySlot){
 
 		//slot = displaySlot;
-	}
+	//}
 
 	public void Update(){
 		

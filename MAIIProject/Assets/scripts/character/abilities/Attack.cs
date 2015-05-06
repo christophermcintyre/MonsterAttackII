@@ -6,20 +6,25 @@ public class Attack : Action {
 
 	public Attack(BaseCharacter e){
 		actionName = "Attack";
+		elementalProperty = Element.BLUNT;
+		targetType = TargetType.ENEMY_SINGLE;
 		executor = e;
 		chargeTime = 100;
 	}
 
 	public override void execute(){
+
+		if (executor.mainWeapon != null) elementalProperty = executor.mainWeapon.elementalProperty;
+
 		if (calculateHit(target, null)) {
-			target.damage(executor, calculateDmg(target, executor.mainWeapon));		
+			target.damage(executor, calculateDmg(target, executor.mainWeapon), elementalProperty);
 		} 
 			
 		if (executor.offHandWeapon != null && calculateHit(target, null)) {
-			target.damage(executor, calculateDmg(target, executor.offHandWeapon));			
+			target.damage(executor, calculateDmg(target, executor.offHandWeapon), elementalProperty);			
 		}
 	
-		executor.resetAction();
+		executor.reset();
 
 	}
 	
@@ -31,13 +36,16 @@ public class Attack : Action {
 		if ((Random.value*100) > hitRate) {
 			target.evade();
 			Debug.Log(executor.Name + " misses " + target.Name + ".");
+			DamagePopUp.ShowMessage ("MISS", target.transform.position);
 			return false;
 		}
 		return true;
 	}
 	
 	public int calculateDmg(BaseCharacter target, Weapon w) {
-		int dmg = (int)Random.value * executor.TotalAttack ();
+		int dmg = (int)(Random.value * executor.TotalAttack ());
+
+		//Debug.Log (executor.Name + "'s Total Attack: " + executor.TotalAttack() + " Damage Roll: " + dmg);
 
 		if (w != null) dmg += w.Damage;
 		
@@ -46,7 +54,10 @@ public class Attack : Action {
 			Debug.Log("Critical hit! ");
 		}
 		dmg -= target.TotalDefense();
+		if (dmg < 0) dmg = 0;
+		Debug.Log (executor.name + " strikes " + target.name + " for " + dmg + " damage." );		
+		DamagePopUp.ShowMessage ("" + dmg, target.transform.position);
+
 		return dmg;
 	}
-
 }
