@@ -9,7 +9,7 @@ public class CharacterDatabase : MonoBehaviour {
 	public static CharacterDatabase Instance {
 		get {
 			if (instance == null) {
-				Debug.Log("Instancing a new CharacterDatabase");
+				//Debug.Log("Instancing a new CharacterDatabase");
 				GameObject go = Instantiate(Resources.Load ("Prefab/CharacterDatabase")) as GameObject;
 				go.name = "Character Database";
 			}

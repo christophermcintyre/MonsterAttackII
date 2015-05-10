@@ -48,13 +48,19 @@ public class EquipmentMenu : Menu {
 		refresh ();
 	}
 
-	public void displayList(List<StatItem> items){
+	public void displayList(List<Item> items){
 		foreach (StatItem i in items) {
 			ListItem l = (ListItem)Instantiate(listItemPrefab);
 			itemDisplayList.Add(l);
 			l.displayItem(i);
 			l.transform.SetParent(itemListPanel.transform, false);
+			l.parentMenu = this;
+
 		}
+	}
+
+	public override void select(ListItem l){
+		selectedItem = (StatItem)l.item;
 	}
 
 	public override void refresh(){
@@ -96,58 +102,50 @@ public class EquipmentMenu : Menu {
 
 		case 0:
 			if (activeCharacter.mainWeapon != null) {
-				//character.mainWeapon.equipped = false;
-				player.inventory.add(activeCharacter.mainWeapon);
+				Player.Instance.inventory.add(activeCharacter.mainWeapon);
 			}
 			activeCharacter.mainWeapon = (Weapon)selectedItem;
-			player.inventory.Items.Remove(selectedItem);
-			//selectedItem.equipped = true;
+			Player.Instance.inventory.Items.Remove(selectedItem);
 			break;
 
 		case 1:
 			if (activeCharacter.offHandWeapon != null) {
-				//character.offHandWeapon.equipped = false;
-				player.inventory.add(activeCharacter.offHandWeapon);
+				Player.Instance.inventory.add(activeCharacter.offHandWeapon);
 			}
 			activeCharacter.offHandWeapon = (Weapon)selectedItem;
-			player.inventory.Items.Remove(selectedItem);
-			//selectedItem.equipped = true;
+			Player.Instance.inventory.Items.Remove(selectedItem);
 			break;
 
 		case 2:
 			if (activeCharacter.accessory1 != null) {
-				//character.accessory1.equipped = false;
-				player.inventory.add(activeCharacter.accessory1);
+				Player.Instance.inventory.add(activeCharacter.accessory1);
 			}
 			activeCharacter.accessory1 = (Accessory)selectedItem;
-			player.inventory.Items.Remove(selectedItem);
-			//selectedItem.equipped = true;
+			Player.Instance.inventory.Items.Remove(selectedItem);
 			break;
 
 		case 3:
 			if (activeCharacter.accessory2 != null) {
-				//character.accessory2.equipped = false;
-				player.inventory.add(activeCharacter.accessory2);
+				Player.Instance.inventory.add(activeCharacter.accessory2);
 			}
 			activeCharacter.accessory2 = (Accessory)selectedItem;
-			player.inventory.Items.Remove(selectedItem);
-			//selectedItem.equipped = true;
+			Player.Instance.inventory.Items.Remove(selectedItem);
 			break;
 		}
 
 	}
 
-	public List<StatItem> validItems(){
+	public List<Item> validItems(){
 
-		List<StatItem> items = new List<StatItem> ();;
+		List<Item> items = new List<Item> ();;
 
 		switch(iType) {
 
 		case Item.ItemType.WEAPON: 
 			//Debug.Log ("looking for righthanded items");
-			foreach(StatItem i in player.inventory.Items){
+			foreach(Item i in Player.Instance.inventory.Items){
 				if (i.itemType == Item.ItemType.WEAPON){
-					if (!i.equipped) items.Add(i);
+					items.Add(i);
 					//if (i.equipped() && i.owner == character) items.Add(i);
 				}
 			}
@@ -155,9 +153,9 @@ public class EquipmentMenu : Menu {
 		
 		case Item.ItemType.ACCESSORY:
 			//Debug.Log ("looking for accessories");
-			foreach(StatItem i in player.inventory.Items){
+			foreach(Item i in Player.Instance.inventory.Items){
 				if (i.itemType == Item.ItemType.ACCESSORY){
-					if (!i.equipped) items.Add(i);
+					items.Add(i);
 					//if (i.equipped() && i.owner == character) items.Add(i);
 				}
 			}

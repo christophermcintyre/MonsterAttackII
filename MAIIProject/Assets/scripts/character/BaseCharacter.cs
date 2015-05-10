@@ -13,8 +13,9 @@ public class BaseCharacter : MonoBehaviour{
 	public Accessory accessory1;
 	public Accessory accessory2;
 
-	private JobList jobList;
-	public List<Action> actions = new List<Action> ();
+	public JobList jobList;
+	private List<Action> innateActions = new List<Action> ();
+	private List<Action> allActions = new List<Action> ();
 
 	public int killCount;
 	public int deathCount;
@@ -28,7 +29,8 @@ public class BaseCharacter : MonoBehaviour{
 	public Action currentAction;
 	public BaseCharacter currentTarget;
 
-
+	public string stealItem;
+	public bool stealable = false;
 
 	void Awake () {
 		DontDestroyOnLoad (transform.gameObject);
@@ -38,9 +40,9 @@ public class BaseCharacter : MonoBehaviour{
 		jobList = GetComponent<JobList> ();
 		jobList.init ();
 		name = firstName;
-		actions.Add (new Attack (this));
-		actions.Add (new Bash (this));
-		actions.Add (new Cure (this));
+		innateActions.Add (new Attack (this));
+		//actions.Add (new Bash (this));
+		//actions.Add (new Cure (this));
 
 		//equipmentSlots = new List<EquipmentSlot> ();
 		//addEquipmentSlots ();
@@ -67,14 +69,23 @@ public class BaseCharacter : MonoBehaviour{
 	}
 
 	public void chooseRandomAction(List<BaseCharacter> allies, List<BaseCharacter> enemies){
-		currentAction = actions [(int)(Random.value * actions.Count)];
+		currentAction = Actions [(int)(Random.value * Actions.Count)];
 		if (currentAction.targetType == Action.TargetType.ENEMY_SINGLE) currentAction.beginCharging (getRandomEnemy (allies));
 		else if (currentAction.targetType == Action.TargetType.ALLY_SINGLE)	currentAction.beginCharging (getRandomEnemy (enemies));
 	}
 
-	public void attack(BaseCharacter target){
-		currentAction = actions [0];
-		actions [0].beginCharging (target);
+	//public void attack(BaseCharacter target){
+	//	currentAction = actions [0];
+	//	currentAction.beginCharging (target);
+	//	Debug.Log (firstName + ": I'm using " + currentAction.executor.firstName + "'s " + currentAction.actionName + " on " + currentAction.target.firstName);
+	//	this.GetComponent<Animation>().CrossFade("Battle_Idle");
+	//}
+
+	public void performAction(BaseCharacter target, Action act){
+		//currentAction = act;
+		currentAction = Actions[Actions.IndexOf(act)];
+		currentAction.beginCharging (target);
+
 		this.GetComponent<Animation>().CrossFade("Battle_Idle");
 	}
 
@@ -169,6 +180,8 @@ public class BaseCharacter : MonoBehaviour{
 		CurrentHp = 0;
 		reset ();
 		deathCount++;
+		this.gameObject.SetActive (false);
+		//this.gameObject.GetComponent<MeshRenderer>
 		//this.GetComponent<Animation>().CrossFade("Knockout");
 	}
 
@@ -213,9 +226,25 @@ public class BaseCharacter : MonoBehaviour{
 		set{ firstName = value;}
 	}
 
+
+
 	public Job CurrentJob{
 		get{ return jobList.getCurrentJob();}
 		private set{ Debug.Log("Unable to set job through this method");}
+	}
+
+	public List<Action> Actions {
+		get{ 
+			allActions.Clear();
+			allActions.AddRange(innateActions);
+			allActions.AddRange(CurrentJob.Actions);
+			return allActions;}
+		private set{ Debug.Log ("Error");}
+	}
+
+	public List<Action> Skills {
+		get{ return CurrentJob.Actions;}
+		private set{ Debug.Log ("Error");}
 	}
 
 	//public List<Job> JobsList{

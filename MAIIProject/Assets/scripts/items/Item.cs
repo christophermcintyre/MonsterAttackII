@@ -44,5 +44,9 @@ public class Item {
 		set{ itemID = value;}
 	}
 
+	public int ItemValue{
+		get{ return itemValue;}
+		set{ itemValue = value;}
+	}
 
 }

@@ -1,6 +1,7 @@
 ﻿public class WhiteMage : Job {
 	
-	public WhiteMage(){
+	public WhiteMage(BaseCharacter bc){
+		owner = bc;
 		Name = "White Mage";
 	}
 }

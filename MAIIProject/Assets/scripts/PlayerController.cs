@@ -26,9 +26,7 @@ public class PlayerController : MonoBehaviour {
 	public Text stickText;
 	public int sticks;
 
-
 	void Start () {
-
 		playerController = GetComponent<CharacterController> ();
 		gameMenu = GameObject.FindGameObjectWithTag ("GameMenu").GetComponent<GameMenu>();
 		menuManager = GameObject.FindGameObjectWithTag ("Canvas").GetComponent<MenuManager> ();
@@ -53,11 +51,11 @@ public class PlayerController : MonoBehaviour {
 
 	void KeyActions(){
 
-		if (Input.GetKey ("i")) {
+		if (Input.GetKeyDown ("i")) {
 			menuManager.showMenu(gameMenu);
 		}
 
-		if (Input.GetKeyDown ("m") && (sticks > 0)) {
+		/*if (Input.GetKeyDown ("m") && (sticks > 0)) {
 			GameObject m = (GameObject)Instantiate(marker);
 			//constructions.Add(m);
 			m.transform.position = this.transform.position;
@@ -95,7 +93,7 @@ public class PlayerController : MonoBehaviour {
 
 			activeItems.Remove(activeItems[0]);
 			sticks +=1;
-		}
+		}*/
 		
 	}	
 

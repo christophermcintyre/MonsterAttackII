@@ -54,6 +54,7 @@
      <Compile Include="Assets\scripts\Element.cs" />
      <Compile Include="Assets\scripts\Follower.cs" />
      <Compile Include="Assets\scripts\GameStart.cs" />
+     <Compile Include="Assets\scripts\NPC.cs" />
      <Compile Include="Assets\scripts\Player.cs" />
      <Compile Include="Assets\scripts\PlayerController.cs" />
      <Compile Include="Assets\scripts\Slot.cs" />
@@ -64,6 +65,7 @@
      <Compile Include="Assets\scripts\character\abilities\Attack.cs" />
      <Compile Include="Assets\scripts\character\abilities\Bash.cs" />
      <Compile Include="Assets\scripts\character\abilities\Cure.cs" />
+     <Compile Include="Assets\scripts\character\abilities\Steal.cs" />
      <Compile Include="Assets\scripts\character\jobs\BlackMage.cs" />
      <Compile Include="Assets\scripts\character\jobs\Brawler.cs" />
      <Compile Include="Assets\scripts\character\jobs\DarkKnight.cs" />
@@ -89,8 +91,11 @@
      <Compile Include="Assets\scripts\menus\GameMenu.cs" />
      <Compile Include="Assets\scripts\menus\InventoryMenu.cs" />
      <Compile Include="Assets\scripts\menus\ItemList.cs" />
+     <Compile Include="Assets\scripts\menus\ListAction.cs" />
+     <Compile Include="Assets\scripts\menus\ListBattle.cs" />
      <Compile Include="Assets\scripts\menus\ListCharacter.cs" />
      <Compile Include="Assets\scripts\menus\ListItem.cs" />
+     <Compile Include="Assets\scripts\menus\Listable.cs" />
      <Compile Include="Assets\scripts\menus\MainMenu.cs" />
      <Compile Include="Assets\scripts\menus\Menu.cs" />
      <Compile Include="Assets\scripts\menus\MenuManager.cs" />
@@ -99,9 +104,13 @@
      <Compile Include="Assets\scripts\world\ItemPickup.cs" />
      <Compile Include="Assets\scripts\world\Marker.cs" />
      <Compile Include="Assets\scripts\world\Targetable.cs" />
+     <None Include="Assets\Standard Assets\Effects\ToonShading\Shaders\ToonBasic.shader" />
      <None Include="Assets\models\shaders\ToonDecal.shader" />
      <None Include="Assets\models\shaders\UnlitDoubleSided.shader" />
      <None Include="Assets\Standard Assets\Skyboxes\_skybox info.txt" />
+     <None Include="Assets\Standard Assets\Effects\ToonShading\Shaders\ToonBasicOutline.shader" />
+     <None Include="Assets\Standard Assets\Effects\ToonShading\Shaders\ToonLitOutline.shader" />
+     <None Include="Assets\Standard Assets\Effects\ToonShading\Shaders\ToonLit.shader" />
      <None Include="Assets\models\shaders\DecalUnlit.shader" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>

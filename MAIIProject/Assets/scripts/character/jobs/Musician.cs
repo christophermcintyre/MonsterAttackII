@@ -1,6 +1,7 @@
 ﻿public class Musician : Job {
 
-	public Musician (){
+	public Musician (BaseCharacter bc){
+		owner = bc;
 		Name = "Musician";
 
 	}

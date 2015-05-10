@@ -9,7 +9,7 @@ public class ItemDatabase : MonoBehaviour {
 	public static ItemDatabase Instance {
 		get {
 			if (instance == null) {
-				Debug.Log("Instancing a new ItemDatabase");
+				//Debug.Log("Instancing a new ItemDatabase");
 				GameObject go = Instantiate(Resources.Load ("Prefab/ItemDatabase")) as GameObject;
 				go.name = "Item Database";
 			}
@@ -68,7 +68,7 @@ public class ItemDatabase : MonoBehaviour {
 			break;
 
 		case Item.ItemType.CONSUMABLE:
-			//copy = new Consumable(template);
+			copy = new Consumable((Consumable)template);
 			break;
 
 		case Item.ItemType.KEY_ITEM:
@@ -87,6 +87,10 @@ public class ItemDatabase : MonoBehaviour {
 	public void buildItems(){
 
 		//Debug.Log("building item database");
+
+		items.Add(new Consumable("potion0", "Potion", 5, 50));
+		items.Add(new Consumable("potion1", "Ether", 5, 50));
+
 
 		//Fighter's gloves
 		items.Add(new Weapon("glove0", "Leather Gloves", 10, Weapon.WeaponTypes.GLOVE, 18, 100));

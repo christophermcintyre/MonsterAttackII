@@ -6,6 +6,8 @@ using System.Collections;
 public class ListCharacter : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler {
 	
 	public BaseCharacter character;
+	public CommandMenu parentMenu;
+
 	public Image imageIcon;
 	public Text nameText;
 
@@ -32,10 +34,10 @@ public class ListCharacter : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
 	
 	public void OnPointerDown(PointerEventData data) {
 		if (data.button == PointerEventData.InputButton.Left) {
-			GetComponentInParent<CommandMenu>().selectedTarget = character;
-			GetComponentInParent<CommandMenu>().attackCommand();
+			parentMenu.selectedTarget = character;
+			parentMenu.confirmAction();
 			//GetComponentInParent<CommandMenu>().refresh();
-			nameText.color = new Color (255, 255, 0);
+			//nameText.color = new Color (255, 255, 0);
 			targetCursor.GetComponent<Renderer> ().enabled = false;
 		}
 	}

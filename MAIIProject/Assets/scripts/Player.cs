@@ -13,13 +13,15 @@ public class Player : MonoBehaviour {
 	public static Player Instance {
 		get {
 			if (instance == null) {
-				Debug.Log("Instancing a new Player");
+				//Debug.Log("Instancing a new Player");
 				GameObject go = Instantiate(Resources.Load ("Prefab/Player")) as GameObject;
 				go.name = "Player";
 			}
 			return instance;
 		}
 	}
+
+	public PlayerController playerAvatar;
 
 	public string playerName;
 	public List<BaseCharacter> playerParty;
@@ -32,23 +34,26 @@ public class Player : MonoBehaviour {
 
 	void Awake(){
 		instance = this;
+		playerAvatar = GameObject.FindObjectOfType<PlayerController> ();
 		DontDestroyOnLoad (transform.gameObject);
 	}
 
 	void Start () {
-
-		//Debug.Log ("Starting Player");
-
 		playerName = "Player";
 		inventory = new Inventory ();
 
 		playerParty.Add(CharacterDatabase.Instance.getCharacterByName("Calais"));
 		playerParty[0].mainWeapon = (Weapon)ItemDatabase.Instance.getItemByName("Dagger");
 		playerParty[0].accessory1 = (Accessory)ItemDatabase.Instance.getItemByName ("Bandit Neckerchief");
+		//playerParty [0].actions.Add (new Cure (playerParty [0]));
 
 		playerParty.Add(CharacterDatabase.Instance.getCharacterByName("Zetes"));
 		playerParty[1].mainWeapon = (Weapon)ItemDatabase.Instance.getItemByName("Leather Gloves");
 		playerParty[1].accessory1 = (Accessory)ItemDatabase.Instance.getItemByName ("Lucky Bell");
+
+		inventory.add (ItemDatabase.Instance.getItemByName("Potion"));
+		inventory.add (ItemDatabase.Instance.getItemByName("Potion"));
+		inventory.add (ItemDatabase.Instance.getItemByName("Ether"));
 
 
 		inventory.add (ItemDatabase.Instance.getItemByName ("Wooden Sword"));
@@ -85,8 +90,7 @@ public class Player : MonoBehaviour {
 	
 	public void revive(){
 		foreach(BaseCharacter c in playerParty){
-			c.revive(false);
-			
+			c.revive(false);			
 		}
 	}
 
@@ -124,4 +128,20 @@ public class Player : MonoBehaviour {
 			}
 		}
 	}
+
+	public int Funds{
+		get{return funds;}
+		set{funds += value;}
+	}
+	
+	public int Wins{
+		get{return wins;}
+		set{wins = value;}
+	}
+	
+	public int Defeats{
+		get{return defeats;}
+		set{defeats = value;}
+	}
+
 }

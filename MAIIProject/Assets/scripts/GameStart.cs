@@ -3,7 +3,7 @@ using System.Collections;
 
 public class GameStart : MonoBehaviour {
 
-	Player player = null;
+	public Player player = null;
 	// Use this for initialization
 	void Start () {
 		player = Player.Instance;

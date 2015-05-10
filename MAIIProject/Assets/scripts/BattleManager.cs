@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class BattleManager : MonoBehaviour {
 
-	public Player player; //FIND THE PLAYER
+	//public Player player; //FIND THE PLAYER
 
 	public BattleDatabase battleDatabase;
 	public Battle battle;
@@ -35,7 +35,7 @@ public class BattleManager : MonoBehaviour {
 	//public BaseCharacter temp;
 
 	public enum BattleStates {
-		START, //load assets, combatants, pan camera, starting play animations
+		START, // pan camera, starting play animations
 		IDLE, //charging atb gauges
 		ACTION, //someone is performing an action, continue atb gauges but only one actor at a time
 		LOSE, //play losing sequence
@@ -44,19 +44,26 @@ public class BattleManager : MonoBehaviour {
 	}
 
 	void Awake(){
-		player = (Player)GameObject.FindWithTag("Player").GetComponent<Player>();
+		//player = (Player)GameObject.FindWithTag("Player").GetComponent<Player>();
 	}
 
-	void Start() {
+	void Start(){
+		//If the battle level is loaded without a battle set, default to training battle
+		if (BattleDatabase.Instance.selectedBattle != null) {
+			battle = BattleDatabase.Instance.selectedBattle;
+		} else {
+			Debug.Log("No battle selected. Loading default battle");
+			battle = BattleDatabase.Instance.getBattleByName("Training Battle");
+		}
+		init();
+	}
 
-		Debug.Log ("Battle start");
-
+	void init() {
+		//Debug.Log ("Initializing battle");
 		commandMenuPanel.SetActive (false);
 		counter = Time.fixedTime + battleSpeed;
 
-		battle = BattleDatabase.Instance.getBattleByName("Training Battle");
-
-		playerParty = player.GetComponent<Player> ().playerParty;
+		playerParty = Player.Instance.GetComponent<Player> ().playerParty;
 		aiParty = new List<BaseCharacter> ();
 
 		for(int i = 0; i < playerParty.Count ; i++){
@@ -72,39 +79,37 @@ public class BattleManager : MonoBehaviour {
 		combatants.AddRange(playerParty);
 		combatants.AddRange(aiParty);
 
-		if (battle != null)	currentState = BattleStates.START;
+		foreach(BaseCharacter c in combatants){
+			c.ActionGuage = (int) (Random.value * c.CurrentJob.Speed) * 10;
+		}
+
+		if (battle != null)	{
+			//Debug.Log ("Initialization succesful. Starting battle.");
+			started = true;
+			currentState = BattleStates.START;
+		} else {
+			Debug.Log ("No battle loaded.");
+			Application.LoadLevel("main");
+		}
+
 	}
 
 	void FixedUpdate(){
-
-		displayCharacterStats ();
-
-		if (Time.fixedTime >= counter) {
-			update();
-			counter = Time.fixedTime + battleSpeed;
+		if (battle != null){
+			displayCharacterStats ();
+			if (Time.fixedTime >= counter) {
+				update();
+				counter = Time.fixedTime + battleSpeed;
+			}
 		}
 	}
 
 	void update () {
 
-		//Debug.Log ("Battle updating");
-
-
-
 		switch(currentState){
 
 		case BattleStates.START:
-
-			started = true;
-			//Debug.Log("Start State");
-
-			foreach(BaseCharacter c in combatants){
-				//Debug.Log(c.name);
-				c.ActionGuage = (int) (Random.value * c.CurrentJob.Speed) * 10;
-			}
-
-			//starting cutscene
-
+			//play opening event
 			currentState = BattleStates.IDLE;
 			break;
 
@@ -128,37 +133,36 @@ public class BattleManager : MonoBehaviour {
 					//actionQueue.Add(c);
 				}
 			}
-
 			//if (actionQueue.Count > 0) currentState = BattleStates.ACTION;
-
 			break;
 
 		case BattleStates.ACTION:
 
 			Debug.Log("ACTION State");
-
 			actionQueue.Clear();
-
 			currentState = BattleStates.IDLE;
-
 			break;
 
 		case BattleStates.LOSE:
 			//Debug.Log("LOSE State");
-			player.defeat();
+			Player.Instance.defeat();
 			currentState = BattleStates.EXIT;
 			break;
 
 		case BattleStates.WIN:
 			//Debug.Log("WIN State");
-			player.addMoney(battle.moneyValue);
-			player.addExp(battle.expValue, true);
+			Player.Instance.win();
+			Player.Instance.addMoney(battle.moneyValue);
+			Player.Instance.addExp(battle.expValue, true);
 			currentState = BattleStates.EXIT;
 			break;
 
 		case BattleStates.EXIT:
 			//Debug.Log("EXIT State");
 			combatants.Clear();
+			foreach (BaseCharacter bc in aiParty){
+				Destroy(bc.gameObject);
+			}
 			aiParty.Clear();
 			aiParty = null;
 			foreach (BaseCharacter c in playerParty){
@@ -205,10 +209,7 @@ public class BattleManager : MonoBehaviour {
 	}
 
 	public void openCommandMenu(BaseCharacter bc){
-
 		commandMenu.open (bc, combatants);
-		commandMenuPanel.SetActive (true);
-
 	}
 
 

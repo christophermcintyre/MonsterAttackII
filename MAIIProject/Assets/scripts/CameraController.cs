@@ -23,6 +23,8 @@ public class CameraController : MonoBehaviour {
 
 	public bool cameraPositionHold;
 
+	//public bool enabled;
+
 	void Start () {
 
 		Vector3 angles = transform.eulerAngles;

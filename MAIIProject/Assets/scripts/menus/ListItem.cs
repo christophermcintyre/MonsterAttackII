@@ -5,26 +5,22 @@ using System.Collections;
 
 public class ListItem : MonoBehaviour, IPointerDownHandler {
 
+	public int index;
+
 	public Item item;
 	public Image imageIcon;
 	public Text nameText;
 
-	//public int equipmentSlotIndex;
+	public Menu parentMenu;
 
-	void Start () {
-
-		//Debug.Log ("parent is: " + this.transform.parent);
+	public void Start () {
 		imageIcon = gameObject.transform.GetChild (0).GetComponent<Image>();
 		nameText = gameObject.transform.GetChild (1).GetComponent<Text>();
 	}
 
 	public void OnPointerDown(PointerEventData data) {
 		if (data.button == PointerEventData.InputButton.Left) {
-
-			GetComponentInParent<EquipmentMenu>().selectedItem = (StatItem)item;
-
-			GetComponentInParent<EquipmentMenu>().refresh();
-			nameText.color = new Color (255, 255, 0);
+			parentMenu.select(this);
 		}
 	}
 
@@ -33,12 +29,5 @@ public class ListItem : MonoBehaviour, IPointerDownHandler {
 		item = i;
 		imageIcon.sprite = i.itemIcon;
 		nameText.text = i.DisplayName;
-		//if (i.equipped())	nameText.color = new Color (0, 255, 0);
-	}
-
-	public void equipItem (){
-		Debug.Log ("Error: ListItem.equipItem does nothing");
-		//BaseCharacter character = this.GetComponentInParent<EquipmentMenu>().slot.owner;
-		//character.equip ((StatItem)item, this.GetComponentInParent<EquipmentMenu> ().slot);
 	}
 }

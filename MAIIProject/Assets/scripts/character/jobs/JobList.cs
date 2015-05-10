@@ -23,20 +23,19 @@ public class JobList : MonoBehaviour {
 
 	public void init () {
 
-		//owner = this.GetComponent<BaseCharacter> ();
-
+		owner = GetComponent<BaseCharacter> ();
 
 		jobs = new List<Job> ();
 
-		jobs.Add (new Brawler());
-		jobs.Add (new Thief ());	
-		jobs.Add (new Warrior ());	
-		jobs.Add (new Musician ());
-		jobs.Add (new BlackMage ());
-		jobs.Add (new DarkKnight ());
-		jobs.Add (new WhiteMage ());
-		jobs.Add (new Sorcerer ());
-		jobs.Add (new Shepherd ());
+		jobs.Add (new Brawler(owner));
+		jobs.Add (new Thief (owner));	
+		jobs.Add (new Warrior (owner));	
+		jobs.Add (new Musician (owner));
+		jobs.Add (new BlackMage (owner));
+		jobs.Add (new DarkKnight (owner));
+		jobs.Add (new WhiteMage (owner));
+		jobs.Add (new Sorcerer (owner));
+		jobs.Add (new Shepherd (owner));
 	
 	}
 

@@ -31,8 +31,10 @@ public class Menu : MonoBehaviour {
 
 	public virtual void refresh(){}
 
+	public virtual void select(ListItem l){}
+
 	public void selectCharacter(int characterIndex) {		
-		activeCharacter = player.playerParty[characterIndex];		
+		activeCharacter = Player.Instance.playerParty[characterIndex];		
 	}
 
 	//public void DisplaySlot(EquipmentSlot displaySlot){

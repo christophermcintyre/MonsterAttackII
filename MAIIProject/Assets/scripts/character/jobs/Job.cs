@@ -54,6 +54,11 @@ public class Job{
 		//owner.revive (true);
 	}
 
+	public List<Action> Actions{
+		get{ return actions;}
+		set{ actions = value;}
+	}
+
 	public string Name {
 		get{ return name;}
 		set{ name = value;}

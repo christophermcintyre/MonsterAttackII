@@ -1,7 +1,7 @@
 ﻿public class Warrior : Job {
 
-	public Warrior(){
-
+	public Warrior(BaseCharacter bc){
+		owner = bc;
 		Name = "Warrior";
 
 	}

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class GameMenu : Menu {
 
 	public List<BaseCharacter> partyList;
+	public List<GameObject> partyMemberPanels;
 
 	public Image[] portraits;
 	public Text[] names;
@@ -13,20 +14,30 @@ public class GameMenu : Menu {
 	public Text[] vitals;
 	public Text[] weapons;
 
+	public Text wins;
+	public Text defeats;
+	public Text money;
+
+	//public string[] currency = new string[] {"Bank","Benjamins","Bills","Bones","Bread","Bucks","Cabbage","Cash","Cheddar","Chips","Clams","Coins","Dead Kings","Dosh","Dough","Funds","Funny money","Gravy","Green","Lettuce","Loot","Lucre","Moolah","Paper","Peanuts","Pennies","Scratch","Skrilla","Simoleons","Stash","Wads"};
 
 	void Start () {
-
-		//reset ();	
+		foreach(GameObject go in partyMemberPanels){
+			go.GetComponent<Button>().enabled = false;
+		}
+		partyList = Player.Instance.playerParty;
 	}
 
 	public override void open(){
+		refresh ();
+	}
 
-		//Debug.Log ("Updating character menu layout");
-		partyList = Player.Instance.playerParty;
+	public override void close(){
 
+	}
 
+	public override void refresh(){
 		foreach (BaseCharacter member in partyList) {		
-
+			partyMemberPanels[partyList.IndexOf(member)].GetComponent<Button>().enabled = true;
 			portraits[partyList.IndexOf(member)].color = new Color32(255, 255, 255, 255);
 			portraits[partyList.IndexOf(member)].sprite = member.Portrait;
 			names[partyList.IndexOf(member)].text = member.Name;
@@ -37,19 +48,8 @@ public class GameMenu : Menu {
 			} else { weapons[partyList.IndexOf(member)].text = "Unarmed";
 			}
 		}
+		money.text = "Dosh: " + Player.Instance.Funds;
+		wins.text = "Wins: " + Player.Instance.Wins;
+		defeats.text = "Losses: " + Player.Instance.Defeats;
 	}
-
-	public void enterBattle(){
-		//BattleManager.load (new Battle());
-		Application.LoadLevel ("battle");
-	}
-
-	public void selectCharacter(){
-
-	}
-
-	public void swapCharacter(){
-
-	}
-
 }
