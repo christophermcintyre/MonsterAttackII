@@ -53,6 +53,26 @@ public class ItemDatabase : MonoBehaviour {
 		return null;
 	}
 
+	public List<Item> getBasicShopInventory(){
+
+		List<Item> shopItems = new List<Item> ();
+
+		shopItems.Add (getItemByName("Potion"));
+		shopItems.Add (getItemByName("Ether"));
+		shopItems.Add (getItemByName("Dagger"));
+		shopItems.Add (getItemByName("Leather Gloves"));
+		shopItems.Add (getItemByName("Wooden Sword"));
+		shopItems.Add (getItemByName("Bronze Sword"));
+		shopItems.Add (getItemByName("Novice Staff"));
+		shopItems.Add (getItemByName("Apprentice Wand"));
+		shopItems.Add (getItemByName("Faerie Flute"));
+		shopItems.Add (getItemByName("Maple Harp"));
+		shopItems.Add (getItemByName("Slingshot"));
+		shopItems.Add (getItemByName("Wool Cape"));
+
+		return shopItems;
+	}
+
 	private Item copyItem(Item template){
 
 		Item copy = null;
