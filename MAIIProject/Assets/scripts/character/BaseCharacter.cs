@@ -14,8 +14,8 @@ public class BaseCharacter : MonoBehaviour{
 	public Accessory accessory2;
 
 	public JobList jobList;
-	private List<Action> innateActions = new List<Action> ();
-	private List<Action> allActions = new List<Action> ();
+	private List<Ability> innateAbilities = new List<Ability> ();
+	private List<Ability> allAbilities = new List<Ability> ();
 
 	public int killCount;
 	public int deathCount;
@@ -26,7 +26,7 @@ public class BaseCharacter : MonoBehaviour{
 
 	public bool playerControl;
 
-	public Action currentAction;
+	public Ability currentAction;
 	public BaseCharacter currentTarget;
 
 	public string stealItem;
@@ -40,7 +40,7 @@ public class BaseCharacter : MonoBehaviour{
 		jobList = GetComponent<JobList> ();
 		jobList.init ();
 		name = firstName;
-		innateActions.Add (new Attack (this));
+		innateAbilities.Add (new Attack (this));
 		//actions.Add (new Bash (this));
 		//actions.Add (new Cure (this));
 
@@ -70,8 +70,8 @@ public class BaseCharacter : MonoBehaviour{
 
 	public void chooseRandomAction(List<BaseCharacter> allies, List<BaseCharacter> enemies){
 		currentAction = Actions [(int)(Random.value * Actions.Count)];
-		if (currentAction.targetType == Action.TargetType.ENEMY_SINGLE) currentAction.beginCharging (getRandomEnemy (allies));
-		else if (currentAction.targetType == Action.TargetType.ALLY_SINGLE)	currentAction.beginCharging (getRandomEnemy (enemies));
+		if (currentAction.targetType == Ability.TargetType.ENEMY_SINGLE) currentAction.beginCharging (getRandomEnemy (allies));
+		else if (currentAction.targetType == Ability.TargetType.ALLY_SINGLE)	currentAction.beginCharging (getRandomEnemy (enemies));
 	}
 
 	//public void attack(BaseCharacter target){
@@ -81,7 +81,7 @@ public class BaseCharacter : MonoBehaviour{
 	//	this.GetComponent<Animation>().CrossFade("Battle_Idle");
 	//}
 
-	public void performAction(BaseCharacter target, Action act){
+	public void performAction(BaseCharacter target, Ability act){
 		//currentAction = act;
 		currentAction = Actions[Actions.IndexOf(act)];
 		currentAction.beginCharging (target);
@@ -208,7 +208,7 @@ public class BaseCharacter : MonoBehaviour{
 		return CurrentJob.Evasion;
 	}
 
-	public int TotalCritRate(){
+	public float TotalCritRate(){
 		return CurrentJob.CritRate;
 	}
 
@@ -233,16 +233,16 @@ public class BaseCharacter : MonoBehaviour{
 		private set{ Debug.Log("Unable to set job through this method");}
 	}
 
-	public List<Action> Actions {
+	public List<Ability> Actions {
 		get{ 
-			allActions.Clear();
-			allActions.AddRange(innateActions);
-			allActions.AddRange(CurrentJob.Actions);
-			return allActions;}
+			allAbilities.Clear();
+			allAbilities.AddRange(innateAbilities);
+			allAbilities.AddRange(CurrentJob.Actions);
+			return allAbilities;}
 		private set{ Debug.Log ("Error");}
 	}
 
-	public List<Action> Skills {
+	public List<Ability> Skills {
 		get{ return CurrentJob.Actions;}
 		private set{ Debug.Log ("Error");}
 	}

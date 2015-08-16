@@ -1,11 +1,11 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class Attack : Action {
+public class Attack : Ability {
 
 	public Attack(BaseCharacter e){
-		actionName = "Attack";
+		abilityName = "Attack";
 		elementalProperty = Element.BLUNT;
 		targetType = TargetType.ENEMY_SINGLE;
 		executor = e;
@@ -37,6 +37,7 @@ public class Attack : Action {
 			target.evade();
 			Debug.Log(executor.Name + " misses " + target.Name + ".");
 			DamagePopUp.ShowMessage ("MISS", target.transform.position);
+
 			return false;
 		}
 		return true;
@@ -57,6 +58,7 @@ public class Attack : Action {
 		if (dmg < 0) dmg = 0;
 		Debug.Log (executor.name + " strikes " + target.name + " for " + dmg + " damage." );		
 		DamagePopUp.ShowMessage ("" + dmg, target.transform.position);
+		//MessagePopUp.Instance.showMessage ("" + dmg, target.transform);
 
 		return dmg;
 	}

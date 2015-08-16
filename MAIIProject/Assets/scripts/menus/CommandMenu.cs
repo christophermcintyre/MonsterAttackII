@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
@@ -8,7 +8,7 @@ public class CommandMenu : MonoBehaviour {
 	public BaseCharacter activeCharacter;
 	public Text activeCharacterName;
 
-	public Action selectedAction;
+	public Ability selectedAction;
 
 	public List<BaseCharacter> targets;
 	public BaseCharacter selectedTarget;
@@ -72,8 +72,8 @@ public class CommandMenu : MonoBehaviour {
 		actionDisplayList.Clear ();
 	}
 
-	public void displayActionList(List<Action> actions){
-		foreach (Action a in actions) {
+	public void displayActionList(List<Ability> actions){
+		foreach (Ability a in actions) {
 			ListAction l = (ListAction)Instantiate(listActionPrefab);
 			actionDisplayList.Add(l);
 			l.displayAction(a);
@@ -107,7 +107,7 @@ public class CommandMenu : MonoBehaviour {
 		switch (selectedAction.targetType){
 
 		//default to enemy list
-		case Action.TargetType.ENEMY_SINGLE:
+		case Ability.TargetType.ENEMY_SINGLE:
 			foreach (BaseCharacter bc in characters) {
 				if (bc.alive() && !bc.playerControl) {
 					ListCharacter l = (ListCharacter)Instantiate(listCharacterPrefab);
@@ -122,7 +122,7 @@ public class CommandMenu : MonoBehaviour {
 			break;
 
 		//default to ally list
-		case Action.TargetType.ALLY_SINGLE:
+		case Ability.TargetType.ALLY_SINGLE:
 			foreach (BaseCharacter bc in characters) {
 				if (bc.playerControl) {
 					ListCharacter l = (ListCharacter)Instantiate(listCharacterPrefab);

@@ -1,11 +1,11 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections;
 
 public class ListAction : MonoBehaviour, IPointerDownHandler {
 
-	public Action action;
+	public Ability action;
 	public CommandMenu parentMenu;
 
 	public Image iconImage;
@@ -24,10 +24,10 @@ public class ListAction : MonoBehaviour, IPointerDownHandler {
 		}
 	}
 	
-	public void displayAction(Action a){
+	public void displayAction(Ability a){
 		Start ();
 		action = a;
-		nameText.text = a.actionName;
+		nameText.text = a.abilityName;
 	}
 
 }

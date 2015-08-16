@@ -14,19 +14,22 @@ public class PlayerController : MonoBehaviour {
 	private GameMenu gameMenu;
 	private MenuManager menuManager;
 
-	public GameObject marker;
-	public GameObject sand_fort;
-	public GameObject sand_wall;
+	//public MessagePopUp popupper;
+
+	//public GameObject marker;
+	//public GameObject sand_fort;
+	//public GameObject sand_wall;
 
 	//public List<GameObject> constructions = new List<GameObject>();
 	//public GameObject lastActive;
-	public List<GameObject> activeObjects = new List<GameObject>();
-	public List<ItemPickup> activeItems = new List<ItemPickup>();
+	//public List<GameObject> activeObjects = new List<GameObject>();
+	//public List<ItemPickup> activeItems = new List<ItemPickup>();
 	
-	public Text stickText;
-	public int sticks;
+	//public Text stickText;
+	//public int sticks;
 
 	void Start () {
+		//popupper = GameObject.FindGameObjectWithTag ("PopUp").GetComponent<MessagePopUp> ();
 		playerController = GetComponent<CharacterController> ();
 		gameMenu = GameObject.FindGameObjectWithTag ("GameMenu").GetComponent<GameMenu>();
 		menuManager = GameObject.FindGameObjectWithTag ("Canvas").GetComponent<MenuManager> ();
@@ -53,6 +56,11 @@ public class PlayerController : MonoBehaviour {
 
 		if (Input.GetKeyDown ("i")) {
 			menuManager.showMenu(gameMenu);
+		}
+
+
+		if (Input.GetKeyDown ("q")) {
+			//popupper.showMessage("Testing", GameObject.FindGameObjectWithTag("Player").transform);
 		}
 
 		/*if (Input.GetKeyDown ("m") && (sticks > 0)) {

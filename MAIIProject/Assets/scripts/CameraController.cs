@@ -6,10 +6,20 @@ public class CameraController : MonoBehaviour {
 	public Transform target;
 
 	public float defaultDistance = 10;
+	private float desiredDistance;
+	private float correctedDistance;
+	private float currentDistance;
+
+	public float offsetFromWall = 1.0f;
+	public LayerMask collisionLayers;
+
+
 	//TODO make camera default to a certain height
+	public float cameraTargetHeight = 2.5f;
+	//public float adjustedTargetHeight = 2.5f;
+
 	//TODO make camera return to default positions gradually while moving
 	//TODO make zoom more fluid
-	public float adjustedTargetHeight = 2.5f;
 	public float minViewDistance = 1.0f;
 	public float maxViewDistance = 25.0f;
 
@@ -22,6 +32,7 @@ public class CameraController : MonoBehaviour {
 	private int mouseYSpeedMod = 3;
 
 	public bool cameraPositionHold;
+	public bool collisions;
 
 	//public bool enabled;
 
@@ -30,6 +41,11 @@ public class CameraController : MonoBehaviour {
 		Vector3 angles = transform.eulerAngles;
 		x = angles.x;
 		y = angles.y;
+
+		currentDistance = defaultDistance;
+		desiredDistance = defaultDistance;
+		correctedDistance = defaultDistance;
+
 	}
 
 	void LateUpdate () {
@@ -56,14 +72,39 @@ public class CameraController : MonoBehaviour {
 
 		Quaternion rotation = Quaternion.Euler (y, x, 0);
 
-		defaultDistance -= Input.GetAxis("Mouse ScrollWheel") * Time.deltaTime * zoomRate * Mathf.Abs(defaultDistance);
-		defaultDistance = Mathf.Clamp (defaultDistance, minViewDistance, maxViewDistance);
+		desiredDistance -= Input.GetAxis("Mouse ScrollWheel") * Time.deltaTime * zoomRate * Mathf.Abs(desiredDistance);
+		desiredDistance = Mathf.Clamp (desiredDistance, minViewDistance, maxViewDistance);
+		correctedDistance = desiredDistance;
 
 		/// Vector3 position = target.position - (rotation * Vector3.forward * defaultDistance);
-		Vector3 position = (target.position + new Vector3(0,adjustedTargetHeight,0)) - (rotation * Vector3.forward * defaultDistance);
+		Vector3 position = (target.position + new Vector3(0,cameraTargetHeight,0)) - (rotation * Vector3.forward * desiredDistance);
+
+
+		if (collisions) {
+
+			RaycastHit collisionHit;
+			Vector3 cameraTargetPosition = new Vector3 (target.position.x, target.position.y + cameraTargetHeight, target.position.z);
+
+			bool isCorrected = false;
+
+			if (Physics.Linecast(cameraTargetPosition, position, out collisionHit, collisionLayers)) {
+				position = collisionHit.point;
+				correctedDistance = Vector3.Distance (cameraTargetPosition, position) - offsetFromWall;
+				isCorrected = true;
+			}
+
+			currentDistance = !isCorrected || correctedDistance > currentDistance ? Mathf.Lerp (currentDistance, correctedDistance, Time.deltaTime * zoomRate) : correctedDistance;
+
+
+			position = target.position - (rotation * Vector3.forward * currentDistance + new Vector3 (0, -cameraTargetHeight, 0));
+		}
 
 		transform.rotation = rotation;
-		transform.position = position;	
+		transform.position = position;
+
+
+
+
 	}
 
 

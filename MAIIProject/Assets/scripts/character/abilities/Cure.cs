@@ -1,11 +1,11 @@
-﻿using UnityEngine;
+using UnityEngine;
 
-public class Cure : Action {
+public class Cure : Ability {
 
 	public int potency=50;
 
 	public Cure(BaseCharacter e){
-		actionName = "Cure";
+		abilityName = "Cure";
 		elementalProperty = Element.LIGHT;
 		targetType = TargetType.ALLY_SINGLE;
 		executor = e;

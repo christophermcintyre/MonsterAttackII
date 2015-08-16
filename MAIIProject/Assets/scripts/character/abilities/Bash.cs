@@ -1,11 +1,11 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
-public class Bash : Action {
+public class Bash : Ability {
 
 	public Bash(BaseCharacter e){
-		actionName = "Bash";
-		actionVerb = "bashes";
+		abilityName = "Bash";
+		abilityVerb = "bashes";
 		elementalProperty = Element.BLUNT;
 		targetType = TargetType.ENEMY_SINGLE;
 		executor = e;
@@ -46,7 +46,7 @@ public class Bash : Action {
 		dmg -= target.TotalDefense();
 		dmg = (int)(dmg * 0.25f);
 		if (dmg < 0) dmg = 0;
-		Debug.Log (executor.name + " " + actionVerb + " " + target.name + " for " + dmg + " damage." );		
+		Debug.Log (executor.name + " " + abilityVerb + " " + target.name + " for " + dmg + " damage." );		
 		DamagePopUp.ShowMessage ("" + dmg, target.transform.position);
 		DamagePopUp.ShowMessage ("STUN", target.transform.position);
 

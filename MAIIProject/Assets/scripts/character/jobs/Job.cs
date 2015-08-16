@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -10,12 +10,15 @@ public class Job{
 
 	private int jobID;
 	private string name;
-	private int level = 1;
+	private int currentLevel = 0;
 	private int maxLevel = 15;
 	private int currentExp = 0; //experience towards next level
 	private int expToLevel = 100;
 	private int totalExp = 0;
 	private float levelModifier = 1.1f;
+
+	public AttributeDatabase attributes;
+
 	private int maxHP=100;
 	private int maxMP=10;
 	private int speed=15;
@@ -23,22 +26,16 @@ public class Job{
 	private int def=10;
 	private int eva=10;
 	private int acc=10;
-	private int critRate;
+	private float critRate;
 	private float critStrength;
 
-	public List<Action> actions = new List<Action>();
+	public List<Ability> actions = new List<Ability>();
 
 	public Job () {
-		//actions.Add (new Attack(owner));
 	}
 
-	//public void initJob(BaseCharacter bc){		
-	//	owner = bc;
-	//	actions.Add (new Attack(bc));
-	//}
-
 	public void addExp (int xp)	{
-		if (level < maxLevel) {
+		if (currentLevel < maxLevel) {
 			currentExp += xp;
 			totalExp += xp;
 			if (currentExp >= expToLevel) {
@@ -49,12 +46,17 @@ public class Job{
 	}
 
 	public void levelUp () {
-		expToLevel = (int)(expToLevel * levelModifier);
-		level++;
-		//owner.revive (true);
+		ExpToLevel = (int)(ExpToLevel * LevelModifier);
+		Level++;
+				
+		foreach (Ability a in actions) {
+			if (Level >= a.RequiredLevel){
+				a.enabled = true;
+			}
+		}
 	}
 
-	public List<Action> Actions{
+	public List<Ability> Actions{
 		get{ return actions;}
 		set{ actions = value;}
 	}
@@ -70,8 +72,8 @@ public class Job{
 	}
 
 	public int Level {
-		get{ return level;}
-		set{ level = value;}
+		get{ return currentLevel;}
+		set{ currentLevel = value;}
 	}
 	
 	public int MaxLevel {
@@ -88,6 +90,10 @@ public class Job{
 		get{ return expToLevel;}
 		set{ expToLevel = value;}
 	}
+
+	public float LevelModifier {
+		get { return levelModifier;	}
+	}
 	
 	public int TotalExp {
 		get{ return totalExp;}
@@ -95,41 +101,41 @@ public class Job{
 	}
 	
 	public int MaxHP {
-		get{ return maxHP;}
-		set{ maxHP = value;}
+		get{ return attributes.MaxHP(Level);}
+		private set{ maxHP = value;}
 	}
 	
 	public int MaxMP {
-		get{ return maxMP;}
+		get{ return attributes.MaxMP(Level);}
 		set{ maxMP = value;}
 	}
 	
 	public int Speed {
-		get{ return speed;}
+		get{ return attributes.Speed(Level);}
 		set{ speed = value;}
 	}
 	
 	public int Attack {
-		get{ return atk;}
+		get{ return attributes.Attack(Level);}
 		set{ atk = value;}
 	}
 	
 	public int Defense {
-		get{ return def;}
+		get{ return attributes.Defense(Level);}
 		set{ def = value;}
 	}
 	
 	public int Accuracy {
-		get{ return acc;}
+		get{ return attributes.Accuracy(Level);}
 		set{ acc = value;}
 	}
 	
 	public int Evasion {
-		get{ return eva;}
+		get{ return attributes.Accuracy(Level);}
 		set{ eva = value;}
 	}
 	
-	public int CritRate {
+	public float CritRate {
 		get{ return critRate;}
 		set{ critRate = value;}
 	}

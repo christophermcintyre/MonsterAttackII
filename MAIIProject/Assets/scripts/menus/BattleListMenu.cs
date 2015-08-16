@@ -55,10 +55,19 @@ public class BattleListMenu : Menu {
 		}
 	}
 
-	public void enterBattle(){
-		BattleDatabase.Instance.selectedBattle = selectedBattle;
+	public void EnterBattle(){
 		Application.LoadLevel ("battle");
 
+
 	}
+
+	public void LoadBattle(){
+		//yield return new WaitForSeconds (0.5f);
+		BattleDatabase.Instance.selectedBattle = selectedBattle;
+		close ();
+		Invoke ("EnterBattle", 1.0f);
+
+	}
+
 
 }

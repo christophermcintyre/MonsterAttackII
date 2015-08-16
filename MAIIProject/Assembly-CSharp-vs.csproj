@@ -19,7 +19,7 @@
 	<DebugType>full</DebugType>
 	<Optimize>false</Optimize>
 	<OutputPath>Temp\bin\Debug\</OutputPath>
-	<DefineConstants>DEBUG;TRACE;UNITY_5_0_0;UNITY_5_0;UNITY_5;ENABLE_LICENSE_RENAME;ENABLE_NEW_BUGREPORTER;ENABLE_2D_PHYSICS;ENABLE_4_6_FEATURES;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_FRAME_DEBUGGER;ENABLE_GENERICS;ENABLE_HOME_SCREEN;ENABLE_IMAGEEFFECTS;ENABLE_LIGHT_PROBES_LEGACY;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_NEW_HIERARCHY;ENABLE_PHYSICS;ENABLE_PHYSICS_PHYSX3;ENABLE_PLUGIN_INSPECTOR;ENABLE_SHADOWS;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_AUDIOMIXER_SUSPEND;ENABLE_NONPRO;INCLUDE_DYNAMIC_GI;INCLUDE_GI;INCLUDE_IL2CPP;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_TEXTUREID_MAP;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_MONO;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN</DefineConstants>
+	<DefineConstants>DEBUG;TRACE;UNITY_5_0_1;UNITY_5_0;UNITY_5;ENABLE_LICENSE_RENAME;ENABLE_NEW_BUGREPORTER;ENABLE_2D_PHYSICS;ENABLE_4_6_FEATURES;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_FRAME_DEBUGGER;ENABLE_GENERICS;ENABLE_HOME_SCREEN;ENABLE_IMAGEEFFECTS;ENABLE_LIGHT_PROBES_LEGACY;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_NEW_HIERARCHY;ENABLE_PHYSICS;ENABLE_PHYSICS_PHYSX3;ENABLE_PLUGIN_INSPECTOR;ENABLE_SHADOWS;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_AUDIOMIXER_SUSPEND;ENABLE_NONPRO;INCLUDE_DYNAMIC_GI;INCLUDE_GI;INCLUDE_IL2CPP;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_TEXTUREID_MAP;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_MONO;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN</DefineConstants>
 	<ErrorReport>prompt</ErrorReport>
 	<WarningLevel>4</WarningLevel>
 	<NoWarn>0169</NoWarn>
@@ -46,78 +46,87 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\scripts\Battle.cs" />
-     <Compile Include="Assets\scripts\BattleDatabase.cs" />
-     <Compile Include="Assets\scripts\BattleManager.cs" />
-     <Compile Include="Assets\scripts\CameraController.cs" />
-     <Compile Include="Assets\scripts\DamagePopUp.cs" />
-     <Compile Include="Assets\scripts\Element.cs" />
-     <Compile Include="Assets\scripts\Follower.cs" />
-     <Compile Include="Assets\scripts\GameStart.cs" />
-     <Compile Include="Assets\scripts\NPC.cs" />
-     <Compile Include="Assets\scripts\Player.cs" />
-     <Compile Include="Assets\scripts\PlayerController.cs" />
-     <Compile Include="Assets\scripts\Slot.cs" />
-     <Compile Include="Assets\scripts\character\AIBehaviour.cs" />
-     <Compile Include="Assets\scripts\character\BaseCharacter.cs" />
-     <Compile Include="Assets\scripts\character\CharacterDatabase.cs" />
-     <Compile Include="Assets\scripts\character\abilities\Action.cs" />
-     <Compile Include="Assets\scripts\character\abilities\Attack.cs" />
-     <Compile Include="Assets\scripts\character\abilities\Bash.cs" />
-     <Compile Include="Assets\scripts\character\abilities\Cure.cs" />
-     <Compile Include="Assets\scripts\character\abilities\Steal.cs" />
-     <Compile Include="Assets\scripts\character\jobs\BlackMage.cs" />
-     <Compile Include="Assets\scripts\character\jobs\Brawler.cs" />
-     <Compile Include="Assets\scripts\character\jobs\DarkKnight.cs" />
-     <Compile Include="Assets\scripts\character\jobs\Job.cs" />
-     <Compile Include="Assets\scripts\character\jobs\JobList.cs" />
-     <Compile Include="Assets\scripts\character\jobs\Musician.cs" />
-     <Compile Include="Assets\scripts\character\jobs\Shepherd.cs" />
-     <Compile Include="Assets\scripts\character\jobs\Sorcerer.cs" />
-     <Compile Include="Assets\scripts\character\jobs\Thief.cs" />
-     <Compile Include="Assets\scripts\character\jobs\Warrior.cs" />
-     <Compile Include="Assets\scripts\character\jobs\WhiteMage.cs" />
-     <Compile Include="Assets\scripts\items\Accessory.cs" />
-     <Compile Include="Assets\scripts\items\Consumable.cs" />
-     <Compile Include="Assets\scripts\items\EquipmentSlot.cs" />
-     <Compile Include="Assets\scripts\items\Inventory.cs" />
-     <Compile Include="Assets\scripts\items\Item.cs" />
-     <Compile Include="Assets\scripts\items\ItemDatabase.cs" />
-     <Compile Include="Assets\scripts\items\StatItem.cs" />
-     <Compile Include="Assets\scripts\items\Weapon.cs" />
-     <Compile Include="Assets\scripts\menus\BattleListMenu.cs" />
-     <Compile Include="Assets\scripts\menus\CommandMenu.cs" />
-     <Compile Include="Assets\scripts\menus\EquipmentMenu.cs" />
-     <Compile Include="Assets\scripts\menus\GameMenu.cs" />
-     <Compile Include="Assets\scripts\menus\InventoryMenu.cs" />
-     <Compile Include="Assets\scripts\menus\ItemList.cs" />
-     <Compile Include="Assets\scripts\menus\ListAction.cs" />
-     <Compile Include="Assets\scripts\menus\ListBattle.cs" />
-     <Compile Include="Assets\scripts\menus\ListCharacter.cs" />
-     <Compile Include="Assets\scripts\menus\ListItem.cs" />
-     <Compile Include="Assets\scripts\menus\Listable.cs" />
-     <Compile Include="Assets\scripts\menus\MainMenu.cs" />
-     <Compile Include="Assets\scripts\menus\Menu.cs" />
-     <Compile Include="Assets\scripts\menus\MenuManager.cs" />
-     <Compile Include="Assets\scripts\menus\ShopMenu.cs" />
-     <Compile Include="Assets\scripts\menus\StatusMenu.cs" />
-     <Compile Include="Assets\scripts\world\Construction.cs" />
-     <Compile Include="Assets\scripts\world\ItemPickup.cs" />
-     <Compile Include="Assets\scripts\world\Marker.cs" />
-     <Compile Include="Assets\scripts\world\Targetable.cs" />
+     <Compile Include="Assets\Scripts\Battle.cs" />
+     <Compile Include="Assets\Scripts\BattleDatabase.cs" />
+     <Compile Include="Assets\Scripts\BattleManager.cs" />
+     <Compile Include="Assets\Scripts\CameraController.cs" />
+     <Compile Include="Assets\Scripts\CameraFacingBillboard.cs" />
+     <Compile Include="Assets\Scripts\DamagePopUp.cs" />
+     <Compile Include="Assets\Scripts\Element.cs" />
+     <Compile Include="Assets\Scripts\Follower.cs" />
+     <Compile Include="Assets\Scripts\GameStart.cs" />
+     <Compile Include="Assets\Scripts\Interfaces\IItemObject.cs" />
+     <Compile Include="Assets\Scripts\MessagePopUp.cs" />
+     <Compile Include="Assets\Scripts\NPC.cs" />
+     <Compile Include="Assets\Scripts\Player.cs" />
+     <Compile Include="Assets\Scripts\PlayerController.cs" />
+     <Compile Include="Assets\Scripts\Slot.cs" />
+     <Compile Include="Assets\Scripts\character\AIBehaviour.cs" />
+     <Compile Include="Assets\Scripts\character\BaseCharacter.cs" />
+     <Compile Include="Assets\Scripts\character\CharacterDatabase.cs" />
+     <Compile Include="Assets\Scripts\character\abilities\Ability.cs" />
+     <Compile Include="Assets\Scripts\character\abilities\Attack.cs" />
+     <Compile Include="Assets\Scripts\character\abilities\Bash.cs" />
+     <Compile Include="Assets\Scripts\character\abilities\Cure.cs" />
+     <Compile Include="Assets\Scripts\character\abilities\Steal.cs" />
+     <Compile Include="Assets\Scripts\character\jobs\AttributeDatabase.cs" />
+     <Compile Include="Assets\Scripts\character\jobs\BlackMage.cs" />
+     <Compile Include="Assets\Scripts\character\jobs\Brawler.cs" />
+     <Compile Include="Assets\Scripts\character\jobs\DarkKnight.cs" />
+     <Compile Include="Assets\Scripts\character\jobs\Job.cs" />
+     <Compile Include="Assets\Scripts\character\jobs\JobList.cs" />
+     <Compile Include="Assets\Scripts\character\jobs\Musician.cs" />
+     <Compile Include="Assets\Scripts\character\jobs\Shepherd.cs" />
+     <Compile Include="Assets\Scripts\character\jobs\Sorcerer.cs" />
+     <Compile Include="Assets\Scripts\character\jobs\Thief.cs" />
+     <Compile Include="Assets\Scripts\character\jobs\Warrior.cs" />
+     <Compile Include="Assets\Scripts\character\jobs\WhiteMage.cs" />
+     <Compile Include="Assets\Scripts\items\Accessory.cs" />
+     <Compile Include="Assets\Scripts\items\Consumable.cs" />
+     <Compile Include="Assets\Scripts\items\EquipmentSlot.cs" />
+     <Compile Include="Assets\Scripts\items\Inventory.cs" />
+     <Compile Include="Assets\Scripts\items\Item.cs" />
+     <Compile Include="Assets\Scripts\items\ItemDatabase.cs" />
+     <Compile Include="Assets\Scripts\items\StatItem.cs" />
+     <Compile Include="Assets\Scripts\items\Weapon.cs" />
+     <Compile Include="Assets\Scripts\menus\BattleListMenu.cs" />
+     <Compile Include="Assets\Scripts\menus\CommandMenu.cs" />
+     <Compile Include="Assets\Scripts\menus\EquipmentMenu.cs" />
+     <Compile Include="Assets\Scripts\menus\GameMenu.cs" />
+     <Compile Include="Assets\Scripts\menus\InventoryMenu.cs" />
+     <Compile Include="Assets\Scripts\menus\ItemList.cs" />
+     <Compile Include="Assets\Scripts\menus\ListAction.cs" />
+     <Compile Include="Assets\Scripts\menus\ListBattle.cs" />
+     <Compile Include="Assets\Scripts\menus\ListCharacter.cs" />
+     <Compile Include="Assets\Scripts\menus\ListItem.cs" />
+     <Compile Include="Assets\Scripts\menus\MainMenu.cs" />
+     <Compile Include="Assets\Scripts\menus\Menu.cs" />
+     <Compile Include="Assets\Scripts\menus\MenuManager.cs" />
+     <Compile Include="Assets\Scripts\menus\ScreenTransition.cs" />
+     <Compile Include="Assets\Scripts\menus\ShopMenu.cs" />
+     <Compile Include="Assets\Scripts\menus\StatusMenu.cs" />
      <None Include="Assets\Standard Assets\Effects\ToonShading\Shaders\ToonBasic.shader" />
      <None Include="Assets\models\shaders\ToonDecal.shader" />
+     <None Include="Assets\models\shaders\CustomLitOutline.shader" />
      <None Include="Assets\models\shaders\UnlitDoubleSided.shader" />
+     <None Include="Assets\Standard Assets\Environment\Water\Water4\Shaders\FXWater4Simple.shader" />
+     <None Include="Assets\models\shaders\ColouredShadow.shader" />
      <None Include="Assets\Standard Assets\Skyboxes\_skybox info.txt" />
+     <None Include="Assets\models\shaders\CustomOutline.shader" />
      <None Include="Assets\Standard Assets\Effects\ToonShading\Shaders\ToonBasicOutline.shader" />
+     <None Include="Assets\Standard Assets\Environment\Water (Basic)\Shaders\FXWaterBasic.shader" />
      <None Include="Assets\Standard Assets\Effects\ToonShading\Shaders\ToonLitOutline.shader" />
      <None Include="Assets\Standard Assets\Effects\ToonShading\Shaders\ToonLit.shader" />
+     <None Include="Assets\Standard Assets\Environment\Water\Water\Shaders\FXWaterPro.shader" />
+     <None Include="Assets\models\shaders\ShadowMaskedTexture.shader" />
+     <None Include="Assets\Standard Assets\Environment\Water\Water4\Shaders\WaterInclude.cginc" />
+     <None Include="Assets\Standard Assets\Environment\Water\Water4\Shaders\FXWater4Advanced.shader" />
      <None Include="Assets\models\shaders\DecalUnlit.shader" />
- <Reference Include="Assembly-UnityScript-firstpass">
- <HintPath>C:/Users/Owner/Documents/GitHub/MonsterAttackII/MAIIProject/Library/ScriptAssemblies/Assembly-UnityScript-firstpass.dll</HintPath>
- </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+ <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/iossupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>
